@@ -185,6 +185,9 @@
       <find>commom</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -222,12 +225,13 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1461" />
-    <option name="y" value="419" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="881" />
+    <option name="y" value="446" />
     <option name="width" value="1566" />
     <option name="height" value="1164" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -345,15 +349,15 @@
       <option name="presentableId" value="Default" />
       <updated>1550905821484</updated>
       <workItem from="1550905822551" duration="5406000" />
-      <workItem from="1550913991145" duration="3638000" />
+      <workItem from="1550913991145" duration="3650000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9044000" />
+    <option name="totallyTimeSpent" value="9056000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="644" y="23" width="1566" height="1164" extended-state="0" />
+    <frame x="721" y="112" width="1566" height="1164" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19022457" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
