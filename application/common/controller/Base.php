@@ -6,6 +6,7 @@
 namespace app\common\controller;
 
 use think\Controller;
+use think\facade\Session;
 
 class Base extends Controller
 {
@@ -17,5 +18,14 @@ class Base extends Controller
     protected function initialize()
     {
 
+    }
+
+//    防止重复登录
+
+    public function isLogin()
+    {
+        if(Session::has('user_id')){
+            $this->error('您已经登录','index/index');
+        }
     }
 }
