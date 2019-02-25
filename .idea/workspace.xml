@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1dbfb6f8-9651-470d-a001-5c08acbbfd5e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/2e49e3bd16cfbc759b47ebf5a2fa0b3e.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/2fe5ea182cccbc277c7680a39664bc21.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/56f40395769ffb6f5650977f75a8131c.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/945dad56d6649a3bb32f9f3b33b85f82.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/a083fc5c50b549844adc3be2cf5a74ca.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/eb196196fd9ceb31015df573cabcc306.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/20180201/ffd37728ade39db69a11cb4cbb1273a8.jpg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +86,9 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/static/css/bootstrap.css">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1251" />
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -154,8 +149,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="374" />
-    <option name="y" value="48" />
+    <option name="x" value="269" />
+    <option name="y" value="23" />
     <option name="width" value="1566" />
     <option name="height" value="1027" />
   </component>
@@ -192,6 +187,21 @@
               <item name="studyOnline" type="b2602c69:ProjectViewProjectNode" />
               <item name="studyOnline" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="studyOnline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="studyOnline" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="bootstrap.css" type="620a8d5e:NestingTreeNode" />
+            </path>
+            <path>
+              <item name="studyOnline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="studyOnline" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="uploads" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -212,6 +222,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/static" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -237,15 +252,15 @@
       <updated>1550905821484</updated>
       <workItem from="1550905822551" duration="5406000" />
       <workItem from="1550913991145" duration="3650000" />
-      <workItem from="1551056502535" duration="264000" />
+      <workItem from="1551056502535" duration="515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9320000" />
+    <option name="totallyTimeSpent" value="9571000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="139" y="23" width="1566" height="1027" extended-state="0" />
+    <frame x="222" y="45" width="1566" height="1027" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19225721" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -413,8 +428,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/bootstrap.css">
+    <entry file="file://$PROJECT_DIR$/public/static/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1251" />
+      </provider>
     </entry>
   </component>
 </project>
