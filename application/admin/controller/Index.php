@@ -8,12 +8,15 @@
 
 namespace app\admin\controller;
 
-use app\common\controller\Base;
+use app\admin\common\controller\Base;
+
 
 class Index extends Base
 {
     public function index()
     {
-       return $this->fetch();
+//        判断用户是否登录
+        $this->isLogin();
+        return $this->view->fetch();
     }
 }
