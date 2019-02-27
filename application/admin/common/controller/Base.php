@@ -21,7 +21,7 @@ class Base extends Controller
 
         if(!Session::has('user_id')){
             $this->error('请先登录','/index/user/login');
-        }else if(Session::get('is_admin')!==1){
+        }else if(Session::get('is_admin')!=="管理员"){
             $this->error('你不是管理员','/');
         }
     }
