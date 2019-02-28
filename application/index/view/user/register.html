@@ -32,7 +32,7 @@
 <script>
     $(function () {
         $("#register").on('click', function () {
-            // alert($('#login').serialize());
+            console.log($('#login').serialize())
             $.ajax({
                 type: 'post',
                 url: "{:url('index/user/insert')}",
