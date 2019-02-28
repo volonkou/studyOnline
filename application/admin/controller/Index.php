@@ -17,6 +17,6 @@ class Index extends Base
     {
 //        判断用户是否登录
         $this->isLogin();
-        return $this->view->fetch();
+        return $this->redirect('user/userlist');
     }
 }

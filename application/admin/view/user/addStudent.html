@@ -1,9 +1,5 @@
-{include file="public:header"/}
-<div class="col-md-12" style="margin-top: 60px;">
-
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h2 style="margin-bottom: 20px">用户注册</h2>
+{layout name="public:layout"/}
+<h4 class="text-center">添加学生</h4>
         <form method="post" id="login">
             <div class="form-group">
                 <label for="exampleInputEmail1">用户名</label>
@@ -21,41 +17,23 @@
                 <label for="exampleInputPassword4">确认密码</label>
                 <input type="password" name="password_confirm" class="form-control" id="exampleInputPassword4" placeholder="确认密码">
             </div>
-
-            <button type="button" class="btn btn-primary" id="register">注册</button><span id="message" style="margin-left:20px;color: red"></span>
+            <button type="button" class="btn btn-primary" id="register">提交</button><span id="message" style="margin-left:20px;color: red"></span>
         </form>
 
-    </div>
-    <div class="col-md-4"></div>
-</div>
 
 <script>
     $(function () {
         $("#register").on('click', function () {
-            console.log($('#login').serialize())
             $.ajax({
                 type: 'post',
-                url: "{:url('index/user/insert')}",
+                url: "{:url('addSave')}",
                 data: $('#login').serialize(),
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
-                    switch (data.status) {
-                        case 1:
-                            alert(data.message)
-                            window.location.href="/index/index/index"
-                            break;
-                        case 0:
-                        case -1:
-                            $('#message').empty();
-                            $('#message').append(data.message)
-                            break;
-                    }
+                    alert(data.message)
                 }
             })
         })
     })
 </script>
 
-
-{include file="public:footer"/}
