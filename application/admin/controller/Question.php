@@ -20,9 +20,9 @@ class Question extends Base
         return $this->view->fetch('add');
     }
 
-    public function get(){
-        $data=QuestionModel::get(1);
-        halt($data);
+    public function get()
+    {
+        $data = QuestionModel::get(1);
     }
 
     public function saveQuestion()
@@ -38,5 +38,27 @@ class Question extends Base
             }
         }
 
+    }
+
+    public function questionList()
+    {
+        $questionList = QuestionModel::select();
+
+        $this->view->assign('title', '题目管理');
+        $this->view->assign('empty', '<span style="red">没有任何数据</span>');
+        $this->view->assign('questionList', $questionList);
+        return $this->view->fetch('questionlist');
+    }
+
+    //    删除题目操作
+    public function doDelete()
+    {
+//获取要删除的题目ID
+        $id = Request::param('id');
+        if (QuestionModel::where('id', $id)->delete()) {
+            return $this->success('删除成功', 'questionlist');
+        } else {
+            return $this->error('删除失败');
+        }
     }
 }

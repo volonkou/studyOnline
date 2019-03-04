@@ -12,6 +12,7 @@ use app\common\controller\Base;
 use app\common\model\User as UserModel;
 use think\facade\Request;
 use think\facade\Session;
+use think\Db;
 
 class User extends Base
 {
@@ -19,6 +20,8 @@ class User extends Base
     public function register()
     {
         $this->assign('title', '用户注册');
+        $cate = Db::table('cate')->select();
+        $this->view->assign('cate', $cate);
         return $this->fetch();
     }
 
@@ -52,6 +55,8 @@ class User extends Base
     public function login()
     {
         $this->isLogin();
+        $cate = Db::table('cate')->select();
+        $this->view->assign('cate', $cate);
         return $this->view->fetch('login', ['title' => '用户登录']);
     }
 

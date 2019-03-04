@@ -14,15 +14,149 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         {volist name="testData" id="test" empty="$empty"}
-        <div>
-            <h3>{$i}.{$test.title}</h3>
-            <div>
+        <div style="margin-bottom: 50px">
 
+            <!--题目列表标题-->
+            <h5>{$i}. {$test.title}</h5>
+
+            <!--判断题列表-->
+            {eq name="$test.type" value="1"}
+            <div>
+                {volist name="test.options" id="option" empty="$empty"}
+                <div style="display:flex;justify-items: center;">
+                    <input type="radio" name="radio1"/>
+                    <p style="margin-left: 20px">{$option}</p>
+                </div>
+                {/volist}
             </div>
+            <div class="res"><input class="btn btn-primary check1" id="{$test.id}" value="检查"/>
+                <span id="success1"></span>
+                <span id="error1"></span>
+            </div>
+            {/eq}
+            <!--选择题列表-->
+            {eq name="$test.type" value="2"}
+            <div>
+                {volist name="test.options" id="option" empty="$empty"}
+                <div style="display:flex;justify-items: center">
+                    <input type="radio" name="radio"/>
+                    <p style="margin-left: 20px">{$option}</p>
+                </div>
+                {/volist}
+            </div>
+            <div class="res"><input class="btn btn-primary check" id="{$test.id}" value="检查"/>
+                <span id="success"></span>
+                <span id="error"></span>
+            </div>
+            {/eq}
+            <!--填空题列表-->
+            {eq name="$test.type" value="3"}
+            <div style="display: inline-flex">
+                <p>正确答案是：</p>
+                <p>{$test.answer}</p>
+            </div>
+            {/eq}
+            <!--简答题列表-->
+            {eq name="$test.type" value="4"}
+            <div>
+                <p>解析：</p>
+                <p>{$test.analysis}</p>
+            </div>
+            {/eq}
+
         </div>
         {/volist}
     </div>
+
     <div class="col-md-2"></div>
 </div>
+
+<script>
+
+    let data = {}
+// 选择题校验
+    $(".check").on('click', function () {
+        data['id'] = this.id
+        $('[name=radio]').each(function (index, item) {
+            if ($(item).is(':checked')) {
+                $.ajax({
+                    type: 'post',
+                    url: "{:url('index/check')}",
+                    data: data,
+                    success: function (data) {
+                        if (data.answer == index + 1) {
+                            alert("回答正确")
+                        }
+                        else {
+                            let M;
+                            switch (data.answer) {
+                                case "1":
+                                    M = "A"
+                                    break;
+                                case "2":
+                                    M = "B"
+                                    break;
+                                case "3":
+                                    M = "C"
+                                    break;
+                                case 4:
+                                    M = "D"
+                                    break;
+                            }
+
+                            alert("回答错误！  正确答案是" + M)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data, "222")
+                    }
+
+                })
+
+            }
+        });
+
+
+    })
+
+    // 判断题校验
+    $(".check1").on('click',function () {
+        data['id'] = this.id
+        $('[name=radio1]').each(function (index, item) {
+            if ($(item).is(':checked')) {
+                $.ajax({
+                    type: 'post',
+                    url: "{:url('index/check')}",
+                    data: data,
+                    success: function (data) {
+                        console.log(data)
+                        if (data.answer == index + 1) {
+                            alert("回答正确")
+                        }
+                        else {
+                            let M;
+                            switch (data.answer) {
+                                case "1":
+                                    M = "正确"
+                                    break;
+                                case "2":
+                                    M = "错误"
+                                    break;
+                            }
+
+                            alert("回答错误！  正确答案是:" + M)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data, "222")
+                    }
+
+                })
+
+            }
+        });
+    })
+
+</script>
 
 {include file="public:footer"/}

@@ -127,24 +127,6 @@
                     </div>
                 </div>
             </div>
-            <div class="question-type-pane" data-type="4">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">关键字 :</label>
-                    <div class="col-sm-9">
-                        <div class="question-option">
-                            <input class="form-control" type="text" name="keyword" title="关键字">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">重要关键字 :</label>
-                    <div class="col-sm-9">
-                        <div class="question-option">
-                            <input class="form-control" type="text" name="keywordImp" title="重要关键字">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">试题解析 :</label>
@@ -187,19 +169,20 @@
                 formData["title"] = form.find('[name="title"]').val();
                 formData["options"] = questionData.options|| "";
                 formData["answer"] = questionData.answer||"";
-                formData["keyword"] = questionData.keyword|| "";
-                formData["keyword_imp"] = questionData.keyword_imp|| "";
                 formData["type"] = questionType;
                 formData["name"] = typeName;
                 formData["analysis"] = form.find('[name="analysis"]').val();
 
-            // console.log(formData)
+            console.log(formData)
                 $.ajax({
                     url: "{:url('saveQuestion')}",
                     type: 'post',
                     data: formData,
                     success:function (data) {
                       alert(data.message)
+                    },
+                    error:function (data) {
+                        console.log(data)
                     }
                 })
 
@@ -230,10 +213,6 @@
                     });
                     data.options = options.join('||');
                     data.answer = options.join('||');
-                    break;
-                case 4: // 简答题
-                    data.keyword = $.trim($('[name=keyword]').val());
-                    data.keyword_imp = $.trim($('[name=keywordImp]').val());
                     break;
             }
             return data;
