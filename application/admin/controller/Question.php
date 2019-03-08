@@ -11,7 +11,7 @@ namespace app\admin\controller;
 use app\admin\common\controller\Base;
 use app\admin\common\model\Question as QuestionModel;
 use think\facade\Request;
-
+use think\Db;
 class Question extends Base
 {
     public function add()
@@ -42,8 +42,7 @@ class Question extends Base
 
     public function questionList()
     {
-        $questionList = QuestionModel::select();
-
+        $questionList = Db::table('question')->paginate(20);
         $this->view->assign('title', '题目管理');
         $this->view->assign('empty', '<span style="red">没有任何数据</span>');
         $this->view->assign('questionList', $questionList);

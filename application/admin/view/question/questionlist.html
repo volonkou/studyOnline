@@ -1,34 +1,47 @@
 {layout name="public:layout"/}
-<h4 class="text-center">用户列表</h4>
-<table class="table table-hover text-center">
-    <tr>
-        <td>ID</td>
-        <td>题目类型</td>
-        <td>题目标题</td>
-        <td>题目答案</td>
-        <td>操作</td>
-    </tr>
-    {volist name="$questionList" id="question"}
-    <tr>
-        <td>{$question.id}</td>
-        <td>{$question.name}</td>
-        <td width="500px">{$question.title}</td>
-        <td>
-            {if condition="$question['answer'] eq 1"}A
-            {elseif condition="$question['answer'] eq 2"}B
-            {elseif condition="$question['answer'] eq 3"}C
-            {else/}D
+<div>
+    <h4 class="text-center">题目列表</h4>
+    <table class="table table-hover text-center">
+        <tr>
+            <td>序号</td>
+            <td>题目类型</td>
+            <td>题目标题</td>
+            <td>题目答案</td>
+            <td>操作</td>
+        </tr>
+        {volist name="$questionList" id="question"}
+        <tr>
+            <td>{$key+1}</td>
+            <td>{$question.name}</td>
+            <td class="text-left" width="500px">{$question.title}</td>
+            {if condition="$question['type'] eq 2"}
+            <td>
+                {if condition="$question['answer'] eq 1"}A
+                {elseif condition="$question['answer'] eq 2"}B
+                {elseif condition="$question['answer'] eq 3"}C
+                {else/}D
+                {/if}
+            </td>
             {/if}
-        </td>
-        <td><a href="{:url('question/doDelete',['id'=>$question.id])}" onclick="return isDelete();">删除</a></td>
-    </tr>
-    {/volist}
-</table>
+            {if condition="$question['type'] eq 1"}
+            <td>
+                {if condition="$question['answer'] eq 1"}对
+                {elseif condition="$question['answer'] eq 2"}错{else/}
+                {/if}
+            </td>
+            {/if}
+            <td><a href="{:url('question/doDelete',['id'=>$question.id])}" onclick="return isDelete();">删除</a></td>
+        </tr>
+        {/volist}
+    </table>
+    <!--分页-->
+    <div class="text-center">{$questionList|raw}</div>
+</div>
 <script>
     function isDelete() {
         if (confirm('确认删除')) {
-           return true;
-        }else {
+            return true;
+        } else {
             return false;
         }
     }

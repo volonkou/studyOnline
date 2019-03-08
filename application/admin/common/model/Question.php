@@ -13,4 +13,7 @@ class Question extends Model
 {
     protected $pk = 'id';
     protected $table = 'question';
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'create_time'; //创建时间字段
+    protected $updateTime = 'update_time'; //更新时间字段
 }

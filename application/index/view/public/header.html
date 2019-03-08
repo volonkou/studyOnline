@@ -26,9 +26,6 @@
                                 {/eq}
                         ><a href="{:url('index/index',['cate_id'=> $cate.id])}">{$cate.name}</a></li>
                         {/volist}
-                        <li>
-                            <a href="{:url('index/video/videolist')}">视频</a>
-                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {if $Think.session.user_id}

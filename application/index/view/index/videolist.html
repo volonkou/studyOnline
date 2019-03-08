@@ -1,0 +1,18 @@
+{include file="public:header"/}
+    <div class="col-md-12">
+        <ul style="list-style: none;">
+            {volist name="testData" id="test" empty="$empty"}
+            <li style="margin-bottom: 50px;display: inline-block">
+                <h5>{$i}</h5>
+                <!--视频列表-->
+                <video controls="controls" style="width: 330px">
+                    <source src="/uploads/{$test.video_url}" type="video/mp4"/>
+                </video>
+                <!--题目列表标题-->
+                <h5>{$test.title}</h5>
+            </li>
+            {/volist}
+        </ul>
+        <div class="text-center">{$testData|raw}</div>
+    </div>
+{include file="public:footer"/}

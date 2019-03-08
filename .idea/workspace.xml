@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="1dbfb6f8-9651-470d-a001-5c08acbbfd5e" name="Default Changelist" comment="" />
+=======
     <list default="true" id="1dbfb6f8-9651-470d-a001-5c08acbbfd5e" name="Default Changelist" comment="">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -27,6 +30,7 @@
       <change beforePath="$PROJECT_DIR$/application/index/view/user/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/index/view/user/register.html" afterDir="false" />
 >>>>>>> 4510e80aab1ef233f9ef657232e7b56151a1e40d
     </list>
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,45 +104,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/admin/view/question/add.html">
+        <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="172" column="59" selection-start-line="172" selection-start-column="59" selection-end-line="172" selection-end-column="59" />
-              <folding>
-                <element signature="n#style#0;n#!!top" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#style#0;n#select#0;n#div#0;n#div#3;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#6;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#14893#16816#0" />
-                <element signature="e#16886#17205#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/view/user/register.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1014">
-              <caret line="35" column="20" lean-forward="true" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h2#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/controller/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
-              <folding>
-                <element signature="e#125#156#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="372">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -178,9 +147,12 @@
       <find>name</find>
       <find>keyword</find>
       <find>question-score-wrapper</find>
-      <find>option</find>
       <find>Question</find>
+<<<<<<< HEAD
+      <find>option</find>
+=======
 >>>>>>> 4510e80aab1ef233f9ef657232e7b56151a1e40d
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
     </findStrings>
     <replaceStrings>
       <replace>#</replace>
@@ -264,6 +236,10 @@
   </component>
   <component name="ProjectFrameBounds">
 <<<<<<< HEAD
+    <option name="x" value="637" />
+    <option name="y" value="45" />
+=======
+<<<<<<< HEAD
     <option name="x" value="417" />
     <option name="y" value="106" />
     <option name="width" value="2082" />
@@ -271,6 +247,7 @@
 =======
     <option name="x" value="344" />
     <option name="y" value="517" />
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
     <option name="width" value="1315" />
     <option name="height" value="962" />
   </component>
@@ -497,13 +474,20 @@
       <workItem from="1551070259843" duration="5000" />
       <workItem from="1551070283900" duration="12920000" />
 <<<<<<< HEAD
+      <workItem from="1551169738446" duration="35992000" />
+=======
+<<<<<<< HEAD
 =======
       <workItem from="1551169738446" duration="34325000" />
 >>>>>>> 4510e80aab1ef233f9ef657232e7b56151a1e40d
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="68020000" />
+=======
 <<<<<<< HEAD
     <option name="totallyTimeSpent" value="32483000" />
   </component>
@@ -527,10 +511,10 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
 =======
     <option name="totallyTimeSpent" value="66353000" />
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
   </component>
   <component name="ToolWindowManager">
-    <frame x="312" y="415" width="1315" height="962" extended-state="0" />
-    <editor active="true" />
+    <frame x="637" y="45" width="1315" height="962" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13589945" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -869,6 +853,8 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
@@ -877,6 +863,7 @@
         </state>
       </provider>
     </entry>
+>>>>>>> 817009d06e9c23ae0786f15892e2620745650a09
     <entry file="file://$PROJECT_DIR$/application/admin/view/user/addStudent.html">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
@@ -994,20 +981,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/controller/Question.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-          <folding>
-            <element signature="e#121#158#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/question/add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="172" column="59" selection-start-line="172" selection-start-column="59" selection-end-line="172" selection-end-column="59" />
+        <state relative-caret-position="291">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
           <folding>
             <element signature="n#style#0;n#!!top" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -1018,6 +995,23 @@
             <element signature="e#16886#17205#0" />
           </folding>
 >>>>>>> 4510e80aab1ef233f9ef657232e7b56151a1e40d
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/Question.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+          <folding>
+            <element signature="e#121#158#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>

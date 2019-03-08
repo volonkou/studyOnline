@@ -1,0 +1,26 @@
+{include file="public:header"/}
+
+<div class="col-md-12">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        {volist name="testData" id="test" empty="$empty"}
+        <div style="margin-bottom: 50px">
+
+            <!--题目列表标题-->
+            <h5>{$key+1}. {$test.title}</h5>
+            <!--简答题列表-->
+            <div>
+                <p>解析：</p>
+                <p>{$test.analysis}</p>
+            </div>
+        </div>
+        {/volist}
+        <!--分页-->
+        <div class="text-center">{$page|raw}</div>
+    </div>
+
+    <div class="col-md-2"></div>
+</div>
+
+
+{include file="public:footer"/}
