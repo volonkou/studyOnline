@@ -7,7 +7,7 @@
         <div style="margin-bottom: 50px">
 
             <!--题目列表标题-->
-            <h5>{$i}. {$test.title}</h5>
+            <h5>{$key+1}. {$test.title}</h5>
             <!--选择题列表-->
             <div>
                 {volist name="test.options" id="option" empty="$empty"}
@@ -23,6 +23,8 @@
             </div>
         </div>
         {/volist}
+        <!--分页-->
+        <div class="text-center">{$page|raw}</div>
     </div>
     <div class="col-md-2"></div>
 </div>

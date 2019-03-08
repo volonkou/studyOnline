@@ -11,12 +11,13 @@ namespace app\admin\controller;
 use app\admin\common\controller\Base;
 use app\admin\common\model\User as UserModel;
 use think\facade\Request;
+use think\Db;
 
 class User extends Base
 {
     public function userList()
     {
-        $userList = UserModel::select();
+        $userList = Db::table('user')->paginate(20);
         $this->view->assign('title', '用户管理');
         $this->view->assign('empty', '<span style="red">没有任何数据</span>');
         $this->view->assign('userList', $userList);

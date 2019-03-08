@@ -11,7 +11,7 @@ namespace app\admin\controller;
 use app\admin\common\controller\Base;
 use app\admin\common\model\Video as VideonModel;
 use think\facade\Request;
-
+use think\Db;
 class Video extends Base
 {
     public function addVideo()
@@ -56,7 +56,7 @@ class Video extends Base
 //    视频列表
     public function videoList()
     {
-        $videoList = VideonModel::select();
+        $videoList = Db::table('video')->paginate(20);
 
         $this->view->assign('title', '视频管理');
         $this->view->assign('empty', '<span style="red">没有任何数据</span>');

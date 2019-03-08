@@ -6,7 +6,7 @@
         {volist name="testData" id="test" empty="$empty"}
         <div style="margin-bottom: 50px">
             <!--题目列表标题-->
-            <h5>{$i}. {$test.title}</h5>
+            <h5>{$key+1}. {$test.title}</h5>
             <!--判断题列表-->
             <div>
                 {volist name="test.options" id="option" empty="$empty"}
@@ -16,12 +16,11 @@
                 </div>
                 {/volist}
             </div>
-            <div class="res"><input class="btn btn-primary check1" id="{$test.id}" value="检查"/>
-                <span id="success1"></span>
-                <span id="error1"></span>
-            </div>
+            <input class="btn btn-primary check1" id="{$test.id}" value="检查"/>
         </div>
         {/volist}
+        <!--分页-->
+        <div class="text-center">{$page|raw}</div>
     </div>
 
     <div class="col-md-2"></div>

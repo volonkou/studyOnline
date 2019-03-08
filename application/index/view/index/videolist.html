@@ -3,6 +3,7 @@
         <ul style="list-style: none;">
             {volist name="testData" id="test" empty="$empty"}
             <li style="margin-bottom: 50px;display: inline-block">
+                <h5>{$i}</h5>
                 <!--视频列表-->
                 <video controls="controls" style="width: 330px">
                     <source src="/uploads/{$test.video_url}" type="video/mp4"/>
