@@ -16,11 +16,17 @@
         <!--导航栏-->
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
-                <!--这里放logo-->
-                <a class="navbar-brand" href="#">Brand</a>
-
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <!--<p class="navbar-text" style="font-size: 20px">在线学习考试系统</p>-->
+                    <h4 class="navbar-text" style="margin-right: 30px">在线学习考试系统</h4>
+                    <ul class="nav navbar-nav">
+                        {volist name="cate" id="cate"}
+                        <li
+                                {eq name="$cate.id" value="$Request.param.cate_id" }
+                                class="active"
+                                {/eq}
+                        ><a href="{:url('index/index',['cate_id'=> $cate.id])}">{$cate.name}</a></li>
+                        {/volist}
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {if $Think.session.user_id}
                         <li><a href="#">{$Think.session.user_name}</a></li>

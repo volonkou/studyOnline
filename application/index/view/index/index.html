@@ -1,5 +1,5 @@
 {include file="public:header"/}
-{include file="public:nav"/}
+
 <style>
     .subject {
         height: 130px;
@@ -10,14 +10,19 @@
         list-style: none;
     }
 </style>
-<div class="col-md-10">
+<div class="col-md-12">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        {volist name="testData" id="test" empty="$empty"}
+        <div>
+            <h3>{$i}.{$test.title}</h3>
+            <div>
 
-    <ul>
-        <li class="col-md-10 subject"></li>
-        <li class="col-md-10 subject"></li>
-        <li class="col-md-10 subject"></li>
-        <li class="col-md-10 subject"></li>
-        <li class="col-md-10 subject"></li>
-    </ul>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    <div class="col-md-2"></div>
 </div>
+
 {include file="public:footer"/}

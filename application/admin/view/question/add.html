@@ -167,16 +167,33 @@
                 let  formData = {}
                 let type = $('.question-type-pane.active').data('type');
                 let questionData = getQuestionData(type);
+               let questionType= form.find('[name="type"]').val();
+               let typeName;
+                 switch (questionType) {
+                     case "1":
+                         typeName="判断题";
+                         break;
+                     case "2":
+                         typeName="选择题";
+                         break;
+                     case "3":
+                         typeName="填空题";
+                         break;
+                     case "4":
+                         typeName="简答题";
+                         break;
+                 }
 
                 formData["title"] = form.find('[name="title"]').val();
                 formData["options"] = questionData.options|| "";
                 formData["answer"] = questionData.answer||"";
                 formData["keyword"] = questionData.keyword|| "";
                 formData["keyword_imp"] = questionData.keyword_imp|| "";
-                formData["type"] = form.find('[name="type"]').val();
+                formData["type"] = questionType;
+                formData["name"] = typeName;
                 formData["analysis"] = form.find('[name="analysis"]').val();
 
-            console.log(formData)
+            // console.log(formData)
                 $.ajax({
                     url: "{:url('saveQuestion')}",
                     type: 'post',
