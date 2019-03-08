@@ -35,7 +35,9 @@ class Index extends Base
                     }
                 }
             } else {
-                $testData = Db::table('video')->order('id', 'desc')->paginate(9);
+                $data = Db::table('video')->order('id', 'desc')->paginate(9);
+                $page = $data->render();
+                $testData=$data->all();
             }
             //        将数据存储起来给模板调用
             $this->view->assign('empty', '<span style="red">没有任何数据</span>');
