@@ -1,0 +1,18 @@
+{layout name="public:layout"/}
+<form action="{:url('admin/video/save')}" enctype="multipart/form-data" method="post">
+    <!-- 用隐藏域向服务器传送作者:当用发布文章的用户id -->
+    <input type="hidden" name="id" value="{$Think.session.user_id}">
+    <div class="form-group">
+        <label for="title">标题</label>
+        <input type="text" name="title" class="form-control" id="title" placeholder="视频标题">
+    </div>
+
+
+    <div class="form-group">
+        <label for="title_video">选择要上传的视频</label>
+        <input type="file" name="title_video" id="title_video">
+        <p class="help-block"></p>
+    </div>
+    <!-- 这里使用原生的post提交 -->
+    <button type="submit" class="btn btn-primary">保存</button>
+</form>
