@@ -10,19 +10,16 @@ namespace app\admin\controller;
 
 use app\admin\common\controller\Base;
 use app\admin\common\model\Question as QuestionModel;
+use app\admin\common\model\Exam;
 use think\facade\Request;
 use think\Db;
+
 class Question extends Base
 {
     public function add()
     {
         $this->view->assign('title', '新建题目');
         return $this->view->fetch('add');
-    }
-
-    public function get()
-    {
-        $data = QuestionModel::get(1);
     }
 
     public function saveQuestion()
@@ -60,4 +57,19 @@ class Question extends Base
             return $this->error('删除失败');
         }
     }
+
+//    生成试卷
+    public function generateExam()
+    {
+        $data = Request::post();
+
+//        $dataExam = QuestionModel::where('id', 'between', '9,10')->select();
+
+        if (Exam::create($data)) {
+            return ['status' => 1, 'message' => '试卷添加成功'];
+        } else {
+            return ['status' => 0, 'message' => '试卷添加失败'];
+        }
+    }
+
 }
