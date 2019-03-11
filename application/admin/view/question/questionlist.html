@@ -7,6 +7,7 @@
             <td>题目类型</td>
             <td>题目标题</td>
             <td>题目答案</td>
+            <td>选择题目</td>
             <td>操作</td>
         </tr>
         {volist name="$questionList" id="question"}
@@ -30,10 +31,16 @@
                 {/if}
             </td>
             {/if}
+            <td><input type="checkbox" id="{$question.id}"/></td>
             <td><a href="{:url('question/doDelete',['id'=>$question.id])}" onclick="return isDelete();">删除</a></td>
         </tr>
         {/volist}
     </table>
+    <div>
+        <label>标题</label>
+        <input type="text">
+        <button id="exam">生成试卷</button>
+    </div>
     <!--分页-->
     <div class="text-center">{$questionList|raw}</div>
 </div>
@@ -45,5 +52,32 @@
             return false;
         }
     }
+  $('#exam').on('click',function () {
+      let data=[]
+      let exam ={}
+      $('[type=checkbox]').each(function (index,item) {
+          if ($(item).is(':checked')) {
+              data.push(item.id)
+          }
+      })
+
+      exam['name']=$('[type=text]').val()
+      if(data.length!==0&&exam['name']){
+          exam['data']=data.join("||");
+          console.log(exam)
+          $.ajax({
+              type: 'post',
+              url: "{:url('generateExam')}",
+              data: exam,
+              success:function (data) {
+                  // console.log(data)
+                 alert(data.message)
+              }
+          })
+      }else {
+          alert("请检查你是否选择题目或输入标题！")
+      }
+  })
+
 </script>
 

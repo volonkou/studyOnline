@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: 2019-03-08 17:30:48
+-- Generation Time: 2019-03-10 17:36:48
 -- 服务器版本： 5.7.21
 -- PHP Version: 7.2.7
 
@@ -43,6 +43,18 @@ INSERT INTO `cate` (`id`, `name`) VALUES
 (3, '填空题'),
 (4, '简答题'),
 (5, '视频');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `exam`
+--
+
+CREATE TABLE `exam` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `data` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -155,6 +167,12 @@ ALTER TABLE `cate`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `exam`
+--
+ALTER TABLE `exam`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `question`
 --
 ALTER TABLE `question`
@@ -177,6 +195,12 @@ ALTER TABLE `video`
 --
 
 --
+-- 使用表AUTO_INCREMENT `exam`
+--
+ALTER TABLE `exam`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `question`
 --
 ALTER TABLE `question`
@@ -192,7 +216,7 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `video`
 --
 ALTER TABLE `video`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
