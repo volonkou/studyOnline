@@ -54,7 +54,9 @@ class User extends Base
 //用户登录
     public function login()
     {
+//        防止重复登录
         $this->isLogin();
+//        获取导航栏分类
         $cate = Db::table('cate')->select();
         $this->view->assign('cate', $cate);
         return $this->view->fetch('login', ['title' => '用户登录']);
