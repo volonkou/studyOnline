@@ -11,6 +11,8 @@ namespace app\index\controller;
 use think\Db;
 use app\common\controller\Base;//导入公共控制器
 use think\facade\Request;
+use app\admin\common\model\Question as QuestionModel;
+use app\common\model\Exam;
 
 class Index extends Base
 {
@@ -27,7 +29,7 @@ class Index extends Base
                 $map[] = ['type', '=', $type];
                 $data = Db::table('question')->where($map)->order('create_time', 'desc')->paginate(5);
                 $page = $data->render();
-                $testData=$data->all();
+                $testData = $data->all();
                 //      处理答案数据类型
                 if (!is_null($testData)) {
                     foreach ($testData as $key => $row) {
@@ -35,9 +37,14 @@ class Index extends Base
                     }
                 }
             } else {
-                $data = Db::table('video')->order('id', 'desc')->paginate(9);
+                if ($type == 5) {
+                    $data = Db::table('video')->order('id', 'desc')->paginate(9);
+                } else if ($type == 6) {
+                    $data = Db::table('exam')->paginate(9);
+
+                }
                 $page = $data->render();
-                $testData=$data->all();
+                $testData = $data->all();
             }
             //        将数据存储起来给模板调用
             $this->view->assign('empty', '<span style="red">没有任何数据</span>');
@@ -60,6 +67,9 @@ class Index extends Base
                 case 5:
                     return $this->view->fetch('videolist');
                     break;
+                case 6:
+                    return $this->view->fetch('examlist');
+                    break;
             }
 
 
@@ -70,7 +80,7 @@ class Index extends Base
                 ->order('create_time', 'desc')
                 ->paginate(5);
             $page = $data->render();
-            $testData=$data->all();
+            $testData = $data->all();
             if (!is_null($testData)) {
                 foreach ($testData as $key => $row) {
                     $testData[$key]['options'] = explode("||", $row['options']);
@@ -92,8 +102,47 @@ class Index extends Base
     {
         $id = Request::param('id');
 
-        $answer = $answer = Db::table('question')->where('id', $id)->find();
+        $answer = Db::table('question')->where('id', $id)->find();
         return $answer;
+    }
+
+//获取试卷详情
+    public function examDetail()
+    {
+        $cate = Db::table('cate')->select();
+        $this->view->assign('cate', $cate);
+//获取试卷的ID
+        $id = Request::param('exam_id');
+        $exam = Db::table('exam')->where('id', $id)->find();
+        $examData = explode("||", $exam['data']);
+        $data = QuestionModel::all($examData);
+        if (!is_null($data)) {
+            foreach ($data as $key => $row) {
+                $data[$key]['options'] = explode("||", $row['options']);
+            }
+        }
+        $this->view->assign('testData', $data);
+        $this->view->assign('examID', $id);
+
+        return $this->view->fetch('examdetail');
+    }
+
+
+    //    校验试卷
+    public function checkExam()
+    {
+        $json = Request::post();
+        $exam = Db::table('exam')->where('id', $json['examID'])->find();
+        unset($json['examID']);
+        $json['name'] = $exam['name'];
+//        halt($json);
+        if (Exam::create($json)) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+
     }
 
 

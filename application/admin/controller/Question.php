@@ -68,7 +68,6 @@ class Question extends Base
     {
         $data = Request::post();
 
-//        $dataExam = QuestionModel::where('id', 'between', '9,10')->select();
 
         if (Exam::create($data)) {
             return ['status' => 1, 'message' => '试卷添加成功'];

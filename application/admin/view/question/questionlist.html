@@ -7,6 +7,7 @@
             <td>题目类型</td>
             <td>题目标题</td>
             <td>题目答案</td>
+            <td>分数</td>
             <td>选择题目</td>
             <td>操作</td>
         </tr>
@@ -23,14 +24,16 @@
                 {else/}D
                 {/if}
             </td>
-            {/if}
-            {if condition="$question['type'] eq 1"}
+            {elseif condition="$question['type'] eq 1"}
             <td>
                 {if condition="$question['answer'] eq 1"}对
                 {elseif condition="$question['answer'] eq 2"}错{else/}
                 {/if}
             </td>
+            {else/}
+            <td></td>
             {/if}
+            <td>{$question.score}</td>
             <td><input type="checkbox" id="{$question.id}"/></td>
             <td><a href="{:url('question/doDelete',['id'=>$question.id])}" onclick="return isDelete();">删除</a></td>
         </tr>

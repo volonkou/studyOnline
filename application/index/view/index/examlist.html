@@ -1,0 +1,13 @@
+{include file="public:header"/}
+    <div class="col-md-12">
+        <ul style="list-style: none;">
+            {volist name="testData" id="test" empty="$empty"}
+            <li style="margin-bottom: 50px;display: inline-block">
+
+                <h5><a href="{:url('index/examDetail',['exam_id'=> $test.id])}">{$test.name}</a></h5>
+            </li>
+            {/volist}
+        </ul>
+        <div class="text-center">{$page|raw}</div>
+    </div>
+{include file="public:footer"/}

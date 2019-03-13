@@ -1,0 +1,132 @@
+{include file="public:header"/}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+    <ul style="list-style: none;" class="examID" data-id="{$examID}">
+        {volist name="testData" id="data" empty="$empty" key="k"}
+        {eq name="$data.type" value="1"}
+        <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
+            data-score="{$data.score}" data-answer="{$data.answer}">
+            <h5>{$k}. {$data.title}({$data.score})分</h5>
+            <div>
+                {volist name="data.options" id="option" empty="$empty" key="k1"}
+                <div style="display:flex;justify-items: center;">
+                    <input type="radio" name="question{$k}" value="{$k1}"/>
+                    <p style="margin-left: 20px">{$option}</p>
+                </div>
+                {/volist}
+            </div>
+        </li>
+        {/eq}
+        {eq name="$data.type" value="2"}
+        <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
+            data-score="{$data.score}" data-answer="{$data.answer}">
+            <h5>{$k}. {$data.title}({$data.score})分</h5>
+            <div>
+                {volist name="data.options" id="option" empty="$empty" key="k1"}
+                <div style="display:flex;justify-items: center;">
+                    <input type="radio" name="question{$k}" value="{$k1}"/>
+                    <p style="margin-left: 20px">{$option}</p>
+                </div>
+                {/volist}
+            </div>
+        </li>
+        {/eq}
+        {eq name="$data.type" value="3"}
+        <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
+            data-score="{$data.score}" data-answer="{$data.answer}">
+            <h5>{$k}. {$data.title}({$data.score})分</h5>
+            <input type="text" name="question{$k}"/>
+        </li>
+        {/eq}
+        {eq name="$data.type" value="4"}
+        <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
+            data-score="{$data.score}" data-answer="{$data.answer}">
+            <h5>{$k}. {$data.title}({$data.score})分</h5>
+            <textarea name="question{$k}" placeholder="在此输入解答"></textarea>
+        </li>
+        {/eq}
+
+        {/volist}
+    </ul>
+    <button id="btn-submit">交卷</button>
+</div>
+<div class="col-md-2"></div>
+{include file="public:footer"/}
+
+<script>
+
+    $('#btn-submit').on('click', function () {
+        let questions = $('.question-item');
+        let list = [];
+        let isWhitePaper = false;
+        $.each(questions, function (index, item) {
+            let questionData = collectQuestionContent(item);
+
+            if (questionData.answer === "") {
+                isWhitePaper = true
+            }
+            list.push(questionData);
+        })
+
+
+        if (isWhitePaper) {
+            alert("你没做完啊")
+        } else {
+            let Sum=0;
+            let error=[];
+            let total=0;
+            for(let i=0;i<list.length;i++){
+                total=total+Number(list[i].score)
+                if(Number(list[i].answer)===Number(list[i].answerTrue)){
+                  Sum=Sum+Number(list[i].score);
+
+                }else{
+                    error.push(list[i].index)
+                }
+            }
+
+            let examID=$('.examID').data('id')
+            let data={}
+            data['score']=Sum;
+            data['total']=total;
+            data['examID']=examID;
+
+            $.ajax({
+                type: 'post',
+                url: "{:url('index/checkExam')}",
+                data: data,
+                success: function (data) {
+                    alert(data)
+
+                },
+                error: function () {
+                    alert(111)
+                }
+            })
+        }
+    })
+
+    function collectQuestionContent(element) {
+
+        let questionItem = {
+            type: $(element).data('type'),
+            index: $(element).data('index'),
+            score: $(element).data('score'),
+            answer: "",
+            answerTrue: $(element).data('answer'),
+        }
+
+        switch (questionItem.type) {
+            case 1:
+            case 2:
+                questionItem.answer = $(element).find('[name="question' + questionItem.index + '"]:checked').val();
+                break;
+            case 3:
+            case 4:
+                questionItem.answer = $(element).find('[name="question' + questionItem.index + '"]').val();
+                break;
+        }
+         return questionItem;
+    }
+
+</script>
