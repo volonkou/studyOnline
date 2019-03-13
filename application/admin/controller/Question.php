@@ -22,13 +22,13 @@ class Question extends Base
 //        打开对应新建问题的模板页面
         return $this->view->fetch('add');
     }
-
+//保存问题方法
     public function saveQuestion()
     {
         if (Request::isAjax()) {
-
-//    验证数据
-            $data = Request::param();//要验证的数据
+//          获取到前台模板提交到的数据
+            $data = Request::param();
+//            将当前获取的数据插入到数据库
             if (QuestionModel::create($data)) {
                 return ['status' => 1, 'message' => '添加成功'];
             } else {
@@ -55,6 +55,7 @@ class Question extends Base
     {
 //获取要删除的题目ID
         $id = Request::param('id');
+//        根据获取到的问题id删除对应问题
         if (QuestionModel::where('id', $id)->delete()) {
             return $this->success('删除成功', 'questionlist');
         } else {
