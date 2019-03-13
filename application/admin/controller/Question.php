@@ -19,6 +19,7 @@ class Question extends Base
     public function add()
     {
         $this->view->assign('title', '新建题目');
+//        打开对应新建问题的模板页面
         return $this->view->fetch('add');
     }
 
@@ -39,10 +40,13 @@ class Question extends Base
 
     public function questionList()
     {
+//        获取问题数据列表并设置分页
         $questionList = Db::table('question')->paginate(20);
+//        设置浏览器标题
         $this->view->assign('title', '题目管理');
-        $this->view->assign('empty', '<span style="red">没有任何数据</span>');
+//        保存获取到的数据
         $this->view->assign('questionList', $questionList);
+//        打开对应问题列表的模板页面
         return $this->view->fetch('questionlist');
     }
 
