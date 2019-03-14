@@ -30,6 +30,7 @@ class Question extends Base
 //          获取到前台模板提交到的数据
             $data = Request::param();
 //            将当前获取的数据插入到数据库
+            
             if (QuestionModel::create($data)) {
                 return ['status' => 1, 'message' => '添加成功'];
             } else {
