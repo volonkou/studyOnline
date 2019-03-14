@@ -27,8 +27,8 @@ class Question extends Base
     {
         if (Request::isAjax()) {
 
-//    验证数据
-            $data = Request::param();//要验证的数据
+
+            $data = Request::param();
             if (QuestionModel::create($data)) {
                 return ['status' => 1, 'message' => '添加成功'];
             } else {

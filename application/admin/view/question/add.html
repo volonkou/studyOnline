@@ -133,13 +133,16 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">试题解析 :</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" name="analysis" id="analysis" rows="4" placeholder="试题解析"></textarea>
+            <div class="question-type-pane" data-type="4">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">答案 :</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="analysis" id="analysis" rows="4" placeholder="试题解析"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="form-group" style="text-align: right;">
             <a id="saveQuestion" class="btn btn-primary">保存</a>
         </div>
@@ -178,7 +181,7 @@
                 formData["answer"] = questionData.answer||"";
                 formData["type"] = questionType;
                 formData["name"] = typeName;
-                formData["analysis"] = form.find('[name="analysis"]').val();
+                // formData["analysis"] = form.find('[name="analysis"]').val();
 
             console.log(formData)
                 $.ajax({
@@ -218,8 +221,10 @@
                     $('[name=blank]').each(function (index, item) {
                         options.push($.trim($(item).val()));
                     });
-                    data.options = options.join('||');
-                    data.answer = options.join('||');
+                    data.answer = $('[name=blank]').val();
+                    break;
+                case 4: // 简答题
+                    data.answer = $('[name=analysis]').val();
                     break;
             }
             return data;

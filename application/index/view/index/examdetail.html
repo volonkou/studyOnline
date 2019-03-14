@@ -49,6 +49,7 @@
         {/volist}
     </ul>
     <button id="btn-submit">交卷</button>
+    <div id="answer" style="margin-left: 100px"></div>
 </div>
 <div class="col-md-2"></div>
 {include file="public:footer"/}
@@ -72,31 +73,93 @@
         if (isWhitePaper) {
             alert("你没做完啊")
         } else {
-            let Sum=0;
-            let error=[];
-            let total=0;
-            for(let i=0;i<list.length;i++){
-                total=total+Number(list[i].score)
-                if(Number(list[i].answer)===Number(list[i].answerTrue)){
-                  Sum=Sum+Number(list[i].score);
+            let Sum = 0;
+            let error = [];
+            let total = 0;
+            for (let i = 0; i < list.length; i++) {
+                total = total + Number(list[i].score)
+                if (Number(list[i].answer) === Number(list[i].answerTrue)) {
+                    Sum = Sum + Number(list[i].score);
 
-                }else{
+                } else {
                     error.push(list[i].index)
                 }
             }
 
-            let examID=$('.examID').data('id')
-            let data={}
-            data['score']=Sum;
-            data['total']=total;
-            data['examID']=examID;
+            let examID = $('.examID').data('id')
+            let data = {}
+            data['score'] = Sum;
+            data['total'] = total;
+            data['examID'] = examID;
 
             $.ajax({
                 type: 'post',
                 url: "{:url('index/checkExam')}",
                 data: data,
                 success: function (data) {
-                    alert(data)
+
+                    if (data === 1) {
+                        let yes = "";
+                        if (Sum === total) {
+                            yes = "恭喜你获得满分"
+                        } else {
+                            yes = "你做错的题目是："
+                        }
+                        let container = "本次考试总分" + total + "分，你获得了" + Sum + "分," + yes + JSON.stringify(error);
+
+                        alert(
+                            container
+                        )
+                        $("#btn-submit").hide();
+                        console.log(list)
+                        $("#answer").append(
+                            "<div><p>答案解析：</p><p>你做错的题目是："+JSON.stringify(error)+"</p><p>正确答案：</p></div>"
+
+                        )
+                        for(let i=0;i<list.length;i++){
+                            let answer="";
+                            switch (list[i].type) {
+                                case 1:
+                                    switch (list[i].answerTrue) {
+                                        case 1:
+                                            answer="正确";
+                                            break;
+                                        case 2:
+                                            answer="错误";
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (list[i].answerTrue) {
+                                        case 1:
+                                            answer="A";
+                                            break;
+                                        case 2:
+                                            answer="B";
+                                            break;
+                                        case 3:
+                                            answer="C";
+                                            break;
+                                        case 4:
+                                            answer="D";
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                case 4:
+                                    answer=list[i].answerTrue
+                                    break;
+
+                            }
+                            $("#answer").append(
+                                "<div><p>"+list[i].index+".  "+answer+"</p></div>"
+
+                            )
+                        }
+
+                    } else {
+                        alert("提交失败！")
+                    }
 
                 },
                 error: function () {
@@ -126,7 +189,7 @@
                 questionItem.answer = $(element).find('[name="question' + questionItem.index + '"]').val();
                 break;
         }
-         return questionItem;
+        return questionItem;
     }
 
 </script>
