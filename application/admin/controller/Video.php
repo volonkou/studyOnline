@@ -9,7 +9,7 @@
 namespace app\admin\controller;
 
 use app\admin\common\controller\Base;
-use app\admin\common\model\Video as VideonModel;
+use app\admin\common\model\Video as VideoModel;
 use think\facade\Request;
 use think\Db;
 class Video extends Base
@@ -34,6 +34,7 @@ class Video extends Base
                     'ext'=>'avi,mp4,mov,mkv,flv,3gp'  //文件扩展名
                 ]) -> move('uploads/');  //移动到public/uploads目录下面
                 if ($info) {
+//                    获取视频的名称信息
                     $data['video_url'] = $info->getSaveName();
 
                 } else {
@@ -41,10 +42,10 @@ class Video extends Base
                 }
 
                 //将数据写到文档表中
-                if(VideonModel::create($data)){
-                    $this->success('文章发布成功','index/index');
+                if(VideoModel::create($data)){
+                    $this->success('视频发布成功','index/index');
                 } else {
-                    $this->error('文章保存失败');
+                    $this->error('视频保存失败');
                 }
 
 
@@ -53,23 +54,23 @@ class Video extends Base
         }
     }
 
-//    视频列表
+//      视频列表
     public function videoList()
     {
+//      获取视频数据列表并设置分页
         $videoList = Db::table('video')->paginate(20);
-
+//      设计浏览器的标题
         $this->view->assign('title', '视频管理');
-        $this->view->assign('empty', '<span style="red">没有任何数据</span>');
         $this->view->assign('videoList', $videoList);
         return $this->view->fetch('videolist');
     }
 
-    //    删除题目操作
+    //    删除视频操作
     public function doDelete()
     {
 //获取要删除的题目ID
         $id = Request::param('id');
-        if (VideonModel::where('id', $id)->delete()) {
+        if (VideoModel::where('id', $id)->delete()) {
             return $this->success('删除成功', 'videolist');
         } else {
             return $this->error('删除失败');

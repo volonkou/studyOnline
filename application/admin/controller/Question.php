@@ -18,11 +18,12 @@ class Question extends Base
 {
     public function add()
     {
+//        这个模板保存的名字是新建题目
         $this->view->assign('title', '新建题目');
-//        打开对应新建问题的模板页面
+//        返回这个模板是添加
         return $this->view->fetch('add');
     }
-//保存问题方法
+//新建问题方法
     public function saveQuestion()
     {
         if (Request::isAjax()) {
@@ -37,7 +38,7 @@ class Question extends Base
         }
 
     }
-
+//查询问题，形成问题列表
     public function questionList()
     {
 //        获取问题数据列表并设置分页
