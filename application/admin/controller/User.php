@@ -30,17 +30,21 @@ class User extends Base
         $this->assign('title', ' 添加学生');
         return $this->fetch();
     }
-
+//新建用户的方法
     public function addSave()
     {
         if (Request::isAjax()) {
-//    验证数据
-            $data = Request::post();//要验证的数据
+//            获取到前台模板提交到的数据
+            $data = Request::post();
+//            验证用户提交数据的规则
             $rule = 'app\common\validate\User';
+//            进行数据匹配验证
             $res = $this->validate($data, $rule);
             if (true !== $res) {
+//            返回错误信息
                 return ['status' => -1, 'message' => $res];
             } else {
+//                将当前获取的数据插入到数据库
                 if (UserModel::create($data)) {
                     return ['status' => 1, 'message' => '添加成功'];
                 } else {
@@ -61,7 +65,6 @@ class User extends Base
         $this->view->assign('title', '编辑用户');
         $this->view->assign('userInfo', $userInfo);
 //        渲染编辑模板
-
         return $this->view->fetch('useredit');
 
     }
