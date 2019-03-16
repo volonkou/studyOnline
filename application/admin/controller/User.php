@@ -19,16 +19,15 @@ class User extends Base
     {
         $userList = Db::table('user')->paginate(20);
         $this->view->assign('title', '用户管理');
-        $this->view->assign('empty', '<span style="red">没有任何数据</span>');
+//        将拿到的用户列表命名并保存
         $this->view->assign('userList', $userList);
-
         return $this->view->fetch('userList');
     }
 
     public function addStudent()
     {
         $this->assign('title', ' 添加学生');
-        return $this->fetch();
+        return $this->fetch('addStudent');
     }
 //新建用户的方法
     public function addSave()
@@ -54,7 +53,7 @@ class User extends Base
         }
     }
 
-//    渲染编辑用户的界面
+//    编辑用户的方法
     public function userEdit()
     {
 //        获取要编辑的用户的ID
@@ -64,7 +63,6 @@ class User extends Base
 //        设置编辑界面模板变量
         $this->view->assign('title', '编辑用户');
         $this->view->assign('userInfo', $userInfo);
-//        渲染编辑模板
         return $this->view->fetch('useredit');
 
     }
