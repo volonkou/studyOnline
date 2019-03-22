@@ -22,13 +22,6 @@ class User extends Model
     }
 
 
-    //用户类型获取器
-    public function getIsAdminAttr($value)
-    {
-        $status = ['1' => '管理员', '0' => '注册会员'];
-        return $status[$value];
-    }
-
     //用户密码修改器
     public function setPasswordAttr($value)
     {

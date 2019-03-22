@@ -1,7 +1,7 @@
 {include file="public:header"/}
 <div class="col-md-2"></div>
 <div class="col-md-8">
-    <ul style="list-style: none;" class="examID" data-id="{$examID}">
+    <ul style="list-style: none;" class="examID" data-id="{$examID}" data-user="{$Think.session.user_id}">
         {volist name="testData" id="data" empty="$empty" key="k"}
         {eq name="$data.type" value="1"}
         <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
@@ -87,17 +87,18 @@
             }
 
             let examID = $('.examID').data('id')
+            let user=$('.examID').data('user')
             let data = {}
             data['score'] = Sum;
             data['total'] = total;
             data['examID'] = examID;
+            data['user_id']=user;
 
             $.ajax({
                 type: 'post',
                 url: "{:url('index/checkExam')}",
                 data: data,
                 success: function (data) {
-
                     if (data === 1) {
                         let yes = "";
                         if (Sum === total) {

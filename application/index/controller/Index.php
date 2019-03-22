@@ -68,6 +68,7 @@ class Index extends Base
                     return $this->view->fetch('videolist');
                     break;
                 case 6:
+                    $this->unLogin();
                     return $this->view->fetch('examlist');
                     break;
             }
@@ -131,10 +132,16 @@ class Index extends Base
     //    校验试卷
     public function checkExam()
     {
+
         $json = Request::post();
-        $exam = Db::table('exam')->where('id', $json['examID'])->find();
+
+        $exam = Db::table('exam')->where('id',$json['examID'])->find();
+
+
+        unset($json['id']);
         unset($json['examID']);
         $json['name'] = $exam['name'];
+//        return $json;
 //        halt($json);
         if (Exam::create($json)) {
             return 1;
