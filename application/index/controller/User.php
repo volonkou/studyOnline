@@ -32,7 +32,6 @@ class User extends Base
         if (Request::isAjax()) {
 //    验证数据
             $data = Request::post();//要验证的数据
-            return $data;
             $rule = 'app\common\validate\User';
             $res = $this->validate($data,$rule);
             if (true !== $res) {

@@ -27,7 +27,9 @@ class Index extends Base
         if (isset($type)) {
             if ($type == 1 || $type == 2 || $type == 3 || $type == 4) {
                 $map[] = ['type', '=', $type];
+//                从问题的数据表根据type这个条件查询数据，根据创建时间倒序排列并分页
                 $data = Db::table('question')->where($map)->order('create_time', 'desc')->paginate(5);
+//                $data是数组，前端页面不识别，通过render方法转换成json
                 $page = $data->render();
                 $testData = $data->all();
                 //      处理答案数据类型
@@ -47,8 +49,8 @@ class Index extends Base
                 $testData = $data->all();
             }
             //        将数据存储起来给模板调用
-            $this->view->assign('empty', '<span style="red">没有任何数据</span>');
             $this->view->assign('testData', $testData);
+//            将处理过的分页信息保存起来
             $this->view->assign('page', $page);
 
             switch ($type) {
@@ -86,8 +88,6 @@ class Index extends Base
                     $testData[$key]['options'] = explode("||", $row['options']);
                 }
             }
-
-            $this->view->assign('empty', '<span style="red">没有任何数据</span>');
             $this->view->assign('testData', $testData);
             $this->view->assign('page', $page);
             return $this->view->fetch('judge');
@@ -115,6 +115,7 @@ class Index extends Base
         $id = Request::param('exam_id');
         $exam = Db::table('exam')->where('id', $id)->find();
         $examData = explode("||", $exam['data']);
+//        根据试卷所有题目的ID，获取对应题目
         $data = QuestionModel::all($examData);
         if (!is_null($data)) {
             foreach ($data as $key => $row) {
@@ -135,7 +136,7 @@ class Index extends Base
         $exam = Db::table('exam')->where('id', $json['examID'])->find();
         unset($json['examID']);
         $json['name'] = $exam['name'];
-//        halt($json);
+//        保存考试信息
         if (Exam::create($json)) {
             return 1;
         } else {

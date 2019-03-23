@@ -37,7 +37,7 @@ class User extends Base
             $data = Request::post();
 //            验证用户提交数据的规则
             $rule = 'app\common\validate\User';
-//            进行数据匹配验证
+//            进行数据验证
             $res = $this->validate($data, $rule);
             if (true !== $res) {
 //            返回错误信息
