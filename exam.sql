@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: 2019-03-14 19:59:29
+-- Generation Time: 2019-03-23 22:01:01
 -- 服务器版本： 5.7.21
 -- PHP Version: 7.2.7
 
@@ -111,7 +111,12 @@ INSERT INTO `question` (`id`, `type`, `name`, `score`, `title`, `options`, `answ
 (27, 1, '判断题', 3, 'lalalalalalallaal', '正确||错误', '1', '1552458589', '1552458589'),
 (28, 4, '简答题', 5, 'v 如果如果不让成年人不能', '', '', '1552550704', '1552550704'),
 (29, 4, '简答题', 3, '我发的 v 收到 v', '', 's删除删除 v 收到 v 上档次 ', '1552551567', '1552551567'),
-(30, 3, '填空题', 3, '我发的 v 收到 v', '', '是对方说的 v', '1552551595', '1552551595');
+(30, 3, '填空题', 3, '我发的 v 收到 v', '', '是对方说的 v', '1552551595', '1552551595'),
+(31, 1, '判断题', 0, '', '正确||错误', '', '1552877554', '1552877554'),
+(36, 1, '判断', 5, '阿里家里丢啊身边都有发生大幅拉升的', '正确||错误', '1', '1552894010', '1552894010'),
+(37, 2, '选择', 5, '售楼处举办了的看家本领的进口帆布', '1||2||3||4', '2', '1552894010', '1552894010'),
+(38, 1, '判断', 5, '不随时间做连续变化的信号，信号数值的大小和增减可采用数字形式。', '正确||错误', '1', '1553169406', '1553169406'),
+(39, 2, '选择', 5, '加工处理数字信号的电路。即能对数字信号进行算术运算和逻辑运算', '1||2||3||4', '2', '1553169406', '1553169406');
 
 -- --------------------------------------------------------
 
@@ -124,6 +129,7 @@ CREATE TABLE `user` (
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `class` varchar(255) NOT NULL,
   `is_admin` int(2) DEFAULT '0',
   `status` int(2) DEFAULT '1',
   `create_time` int(10) DEFAULT NULL,
@@ -134,10 +140,13 @@ CREATE TABLE `user` (
 -- 转存表中的数据 `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `password`, `email`, `is_admin`, `status`, `create_time`, `update_time`) VALUES
-(168, 'admin', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'admin@qq.com', 1, 1, 1551252545, 1551252545),
-(169, '小明', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'xiaoming@qq.com', 0, 1, 1551260137, 1551260137),
-(170, '小红', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'xiaohong@qq.com', 0, 1, 1551260170, 1551260170);
+INSERT INTO `user` (`id`, `name`, `password`, `email`, `class`, `is_admin`, `status`, `create_time`, `update_time`) VALUES
+(168, 'admin', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'admin@qq.com', '', 2, 1, 1551252545, 1551252545),
+(169, '小明', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'xiaoming@qq.com', '', 1, 1, 1551260137, 1551260137),
+(170, '小红', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'xiaohong@qq.com', '', 1, 1, 1551260170, 1551260170),
+(174, '猪头啊', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'zhutou@qq.com', '软件142', 1, 1, 1553168793, 1553168793),
+(175, '哒哒哒哒', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'dada@qq.com', '软件142', 0, 1, 1553168793, 1553168793),
+(176, 'lalalal', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lala@qq.com', '软件142', 0, 1, 1553168793, 1553168793);
 
 -- --------------------------------------------------------
 
@@ -146,6 +155,7 @@ INSERT INTO `user` (`id`, `name`, `password`, `email`, `is_admin`, `status`, `cr
 --
 
 CREATE TABLE `user_exam` (
+  `user_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `score` int(11) NOT NULL,
@@ -156,21 +166,9 @@ CREATE TABLE `user_exam` (
 -- 转存表中的数据 `user_exam`
 --
 
-INSERT INTO `user_exam` (`id`, `name`, `score`, `total`) VALUES
-(1, '第一次模考', 0, 0),
-(2, '第一次模考', 0, 0),
-(3, '第三次模考', 3, 29),
-(4, '第三次模考', 13, 29),
-(5, '第三次模考', 3, 29),
-(6, '第三次模考', 13, 29),
-(7, '第三次模考', 15, 29),
-(8, '第三次模考', 3, 29),
-(9, '第三次模考', 3, 29),
-(10, '第三次模考', 5, 29),
-(11, '第三次模考', 18, 29),
-(12, '第三次模考', 8, 29),
-(13, '第三次模考', 3, 29),
-(14, '第三次模考', 3, 29);
+INSERT INTO `user_exam` (`user_id`, `id`, `name`, `score`, `total`) VALUES
+(169, 17, '第三次模考', 3, 29),
+(169, 18, '第三次模考', 13, 29);
 
 -- --------------------------------------------------------
 
@@ -265,19 +263,19 @@ ALTER TABLE `exam`
 -- 使用表AUTO_INCREMENT `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- 使用表AUTO_INCREMENT `user_exam`
 --
 ALTER TABLE `user_exam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- 使用表AUTO_INCREMENT `video`
