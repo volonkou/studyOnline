@@ -10,21 +10,45 @@
     {volist name="examList" id="exam" empty="$empty"}
     <tr>
         <td>{$exam.name}</td>
-        <td>{$exam.score}</td>
+        <!--<td id="score">{$exam.score}</td>-->
+        <td id="edit"><input type="number" id="{$exam.id}" value="{$exam.score}"/></td>
 
-        <td><a href="" onclick="return isDelete();">修改</a></td>
+        <td><a onclick="return isEdit();">修改</a></td>
 
     </tr>
     {/volist}
 </table>
 <!--分页-->
 <script>
-    function isDelete() {
+    function isEdit() {
         if (confirm('确认修改')) {
+            Edit()
             return true;
+
         } else {
             return false;
         }
     }
+
+    function Edit() {
+
+        let Data = {};
+        Data['id'] = $('#edit').find('input').attr('id');
+        Data['score'] = $('#edit').find('input').val();
+        console.log(Data)
+        $.ajax({
+            url: "{:url('EditScore')}",
+            type: 'post',
+            data: Data,
+            success: function (data) {
+                alert(data.msg)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+
+    }
+
 </script>
 

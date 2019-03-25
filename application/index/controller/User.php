@@ -34,15 +34,15 @@ class User extends Base
             $data = Request::post();//要验证的数据
             return $data;
             $rule = 'app\common\validate\User';
-            $res = $this->validate($data,$rule);
+            $res = $this->validate($data, $rule);
             if (true !== $res) {
                 return ['status' => -1, 'message' => $res];
             } else {
-                if ($user=UserModel::create($data)) {
+                if ($user = UserModel::create($data)) {
                     $loginUser = UserModel::get($user->id);
-                    Session::set('user_id',$loginUser->id);
-                    Session::set('user_name',$loginUser->name);
-                    Session::set('is_admin',$loginUser->is_admin);
+                    Session::set('user_id', $loginUser->id);
+                    Session::set('user_name', $loginUser->name);
+                    Session::set('is_admin', $loginUser->is_admin);
                     return ['status' => 1, 'message' => '恭喜注册成功'];
                 } else {
                     return ['status' => 0, 'message' => '注册失败'];
@@ -100,4 +100,49 @@ class User extends Base
         Session::clear();
         $this->success("退出登录成功", "index/index");
     }
+
+    public function UserInfo()
+    {
+        $id=Session::get('user_id');
+        $data=Db::table('user')->find($id);
+        $examdata = Db::table('user_exam')->where('user_id', $id)->paginate(20);
+        $cate = Db::table('cate')->select();
+        $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
+        $this->view->assign('cate', $cate);
+        $this->assign('title', '个人信息');
+        $this->assign('userInfo', $data);
+        $this->assign('examList', $examdata);
+        return $this->fetch('userinfo');
+    }
+
+    //编辑完成后保存数据
+    public function doEdit()
+    {
+//        获取用户提交的信息
+        $data = Request::param();
+
+//        去除用户ID
+        $id = $data['id'];
+//        获取用户原来的数据
+        $oldData = UserModel::get($id);
+
+//        将用户密码加密在保存
+        if ($data['password'] == $oldData['password']) {
+            unset($data['password']);
+        } else {
+            $data['password'] = sha1($data['password']);
+        }
+
+//        删除ID
+        unset($data['id']);
+//        halt($data);
+//        执行更新操作
+        if (UserModel::where('id', $id)->data($data)->update()) {
+            return $this->success('更新成功');
+        } else {
+            return $this->error('更新失败');
+        }
+
+    }
+
 }
