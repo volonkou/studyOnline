@@ -35,7 +35,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                {if $Think.session.is_admin=="管理员"}
+                                {if $Think.session.is_admin==1||$Think.session.is_admin==2}
                                 <li><a href="/admin">管理后台</a></li>
                                 {/if}
                                 <li><a href="{:url('user/logout')}">退出登录</a></li>

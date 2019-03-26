@@ -28,4 +28,10 @@ class Base extends Controller
             $this->error('您已经登录','index/index');
         }
     }
+ public function unLogin(){
+     if(!Session::has('user_id')){
+         $this->error('请先登录','/index/user/login');
+     }
+ }
+
 }

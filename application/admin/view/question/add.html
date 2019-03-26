@@ -3,22 +3,27 @@
     .question-type-pane {
         display: none;
     }
+
     .question-type-pane.active {
         display: block;
     }
+
     .question-option {
         font-size: 0;
         margin-bottom: 10px;
     }
+
     .question-option label,
     .question-option input[type=text] {
         font-size: 14px;
         vertical-align: middle;
     }
+
     .question-option input[type=text].form-control {
         display: inline-block;
         width: 400px;
     }
+
     .question-option label {
         margin-bottom: 0;
     }
@@ -39,6 +44,7 @@
         padding: 0;
         box-sizing: border-box;
     }
+
     .question-wrapper a {
         position: absolute;
         right: 15px;
@@ -50,10 +56,12 @@
         background: #fff;
         transition: all .3s;
     }
+
     .question-wrapper a:hover {
         color: #1a8cfe;
         border-color: #1a8cfe;
     }
+
     .question-wrapper a i {
         margin-right: 11px;
     }
@@ -81,7 +89,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">试题分数 :</label>
             <div class="col-sm-9">
-                <input class="form-control" id="questionScore"  name="title" />
+                <input class="form-control" id="questionScore" name="title"/>
             </div>
         </div>
         <div class="question-setting-wrapper">
@@ -106,7 +114,7 @@
                     <div class="col-sm-9">
                         <div class="question-option">
                             <input type="radio" name="radio" title="单选题选项">
-                            <input type="text" class="form-control" name="radioText" placeholder="单选题选项内容" value="" >
+                            <input type="text" class="form-control" name="radioText" placeholder="单选题选项内容" value="">
                         </div>
                         <div class="question-option">
                             <input type="radio" name="radio" title="单选题选项">
@@ -137,14 +145,27 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">答案 :</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" name="analysis" id="analysis" rows="4" placeholder="试题解析"></textarea>
+                        <textarea class="form-control" name="analysis" id="analysis" rows="4"
+                                  placeholder="试题解析"></textarea>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group" style="text-align: right;">
+        <div class="" style="text-align: right;width: 750px">
             <a id="saveQuestion" class="btn btn-primary">保存</a>
+        </div>
+    </form>
+
+    <form action="{:url('admin/question/importQuestion')}" enctype="multipart/form-data" method="post" style="margin-top: 50px">
+        <h4 class="text-center text-danger">导入题目</h4>
+        <div class="form-group" style="display:flex;justify-content: space-between;margin-top: 50px">
+            <label for="title_question">选择要上传的题目文件:</label>
+
+                <input type="file" name="title_question" id="title_question">
+                <!-- 这里使用原生的post提交 -->
+                <button type="submit" class="btn btn-primary">保存</button>
+
         </div>
     </form>
 </div>
@@ -154,57 +175,58 @@
     (function () {
         // 保存
         $('#saveQuestion').on('click', function () {
-                let form = $('#addQuestionForm')
-                let  formData = {}
-                let type = $('.question-type-pane.active').data('type');
-                let questionData = getQuestionData(type);
-               let questionType= form.find('[name="type"]').val();
-               let typeName;
-                 switch (questionType) {
-                     case "1":
-                         typeName="判断题";
-                         break;
-                     case "2":
-                         typeName="选择题";
-                         break;
-                     case "3":
-                         typeName="填空题";
-                         break;
-                     case "4":
-                         typeName="简答题";
-                         break;
-                 }
+            let form = $('#addQuestionForm')
+            let formData = {}
+            let type = $('.question-type-pane.active').data('type');
+            let questionData = getQuestionData(type);
+            let questionType = form.find('[name="type"]').val();
+            let typeName;
+            switch (questionType) {
+                case "1":
+                    typeName = "判断题";
+                    break;
+                case "2":
+                    typeName = "选择题";
+                    break;
+                case "3":
+                    typeName = "填空题";
+                    break;
+                case "4":
+                    typeName = "简答题";
+                    break;
+            }
 
-                formData["title"] = form.find('[name="title"]').val();
-                formData["options"] = questionData.options|| "";
-                formData["score"]=form.find('#questionScore').val();
-                formData["answer"] = questionData.answer||"";
-                formData["type"] = questionType;
-                formData["name"] = typeName;
-                // formData["analysis"] = form.find('[name="analysis"]').val();
+            formData["title"] = form.find('[name="title"]').val();
+            formData["options"] = questionData.options || "";
+            formData["score"] = form.find('#questionScore').val();
+            formData["answer"] = questionData.answer || "";
+            formData["type"] = questionType;
+            formData["name"] = typeName;
+            // formData["analysis"] = form.find('[name="analysis"]').val();
 
             console.log(formData)
             // 用ajax提交所输入的数据
-                $.ajax({
-                    url: "{:url('saveQuestion')}",
-                    type: 'post',
-                    data: formData,
-                    success:function (data) {
-                      alert(data.message)
-                    },
-                    error:function (data) {
-                        console.log(data)
-                    }
-                })
+            $.ajax({
+                url: "{:url('saveQuestion')}",
+                type: 'post',
+                data: formData,
+                success: function (data) {
+                    alert(data.message)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
 
         });
+
         function getQuestionData(type) {
             var data = {}, options = [];
             switch (type) {
                 case 1: // 判断题
                     $('[name=trueOrFalse]').each(function (index, item) {
                         if ($(item).is(':checked')) {
-                            data.answer = index+1;
+                            data.answer = index + 1;
                         }
                     });
                     data.options = "正确||错误";
@@ -213,7 +235,7 @@
                     $('[name=radio]').each(function (index, item) {
                         options.push($.trim($(item).siblings('[name=radioText]').val()));
                         if ($(item).is(':checked')) {
-                            data.answer = index+1;
+                            data.answer = index + 1;
                         }
                     });
                     data.options = options.join('||');
@@ -230,6 +252,7 @@
             }
             return data;
         }
+
         // 选择题型
         $('.question-type').on('change', function () {
             var val = $(this).val();

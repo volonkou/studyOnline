@@ -1,0 +1,28 @@
+{layout name="public:layout"/}
+<h4 class="text-center">班级列表</h4>
+<table class="table table-hover text-center">
+    <tr>
+
+        <td>班级</td>
+        <td>操作</td>
+    </tr>
+    {volist name="classlist" id="class" empty="$empty"}
+    <tr>
+        <td><a href="{:url('user/getClassUser',['class'=>$class])}">{$class}</a></td>
+
+        <td><a href="{:url('user/DeleteClass',['class'=>$class])}" onclick="return isDelete();">删除</a></td>
+
+    </tr>
+    {/volist}
+</table>
+<!--分页-->
+<script>
+    function isDelete() {
+        if (confirm('确认删除?删除之后整个班级的用户都将被删除掉！')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+

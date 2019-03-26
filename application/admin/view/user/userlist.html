@@ -5,23 +5,53 @@
         <td>ID</td>
         <td>用户名</td>
         <td>邮箱</td>
-        <td>注册时间</td>
-        <td>状态</td>
-        <td colspan="2">操作</td>
+        <td>班级</td>
+        {if condition="($Think.session.is_admin == 2)"}
+          <td>设置管理员</td>
+        {/if}
+        <td>操作</td>
+        <td>信息</td>
     </tr>
     {volist name="userList" id="user" empty="$empty"}
     <tr>
         <td>{$user.id}</td>
         <td>{$user.name}</td>
         <td>{$user.email}</td>
-        <td>{$user.create_time}</td>
-        <td>{$user.is_admin}</td>
+        <td>{$user.class}</td>
+        {if condition="($Think.session.is_admin == 2)"}
+            {eq name="$user.is_admin" value="1"}
+            <td><a href="{:url('user/quitSet',['id'=>$user.id])}">取消</a></td>
+            {/eq}
+            {neq name="$user.is_admin" value="1"}
+                 {eq name="$user.is_admin" value="2"}
+                    <td></td>
+                 {/eq}
+                  {neq name="$user.is_admin" value="2"}
+                    <td><a href="{:url('user/set',['id'=>$user.id])}">设置</a></td>
+                  {/neq}
+             {/neq}
+        {/if}
+
         {eq name="$user.id" value="$Think.session.user_id"}
         <td><a href="{:url('user/userEdit',['id'=>$user.id])}">编辑</a></td>
         {/eq}
+
         {neq name="$user.id" value="$Think.session.user_id"}
+        {eq name="$user.is_admin" value="2"}
+        <td></td>
+        {/eq}
+        {neq name="$user.is_admin" value="2"}
+        {neq name="$user.is_admin" value="1"}
         <td><a href="{:url('user/doDelete',['id'=>$user.id])}" onclick="return isDelete();">删除</a></td>
         {/neq}
+        {eq name="$user.is_admin" value="1"}
+        <td></td>
+        {/eq}
+        {/neq}
+
+
+        {/neq}
+        <td><a href="{:url('user/getUserExamList',['id'=>$user.id])}">查看</a></td>
     </tr>
     {/volist}
 </table>
@@ -30,8 +60,8 @@
 <script>
     function isDelete() {
         if (confirm('确认删除')) {
-           return true;
-        }else {
+            return true;
+        } else {
             return false;
         }
     }

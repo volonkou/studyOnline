@@ -10,8 +10,12 @@ namespace app\admin\controller;
 
 use app\admin\common\controller\Base;
 use app\admin\common\model\User as UserModel;
+use app\admin\common\model\UserExam;
+
+use think\Env;
 use think\facade\Request;
 use think\Db;
+use think\facade\App;
 
 class User extends Base
 {
@@ -21,7 +25,43 @@ class User extends Base
         $this->view->assign('title', '用户管理');
 //        将拿到的用户列表命名并保存
         $this->view->assign('userList', $userList);
+        $this->view->assign('userList', $userList);
         return $this->view->fetch('userList');
+    }
+
+
+    public function classList(){
+        $userList=UserModel::all();
+        foreach ($userList as $key=>$v){
+            if($userList[$key]['class']){
+                $class[]=$userList[$key]['class'];
+            }
+
+        }
+        $data=array_unique($class);
+//        dump($data);
+        $this->view->assign('classlist', $data);
+        return $this->view->fetch('classlist');
+
+    }
+
+//班级用户列表
+    public function getClassUser(){
+        $className = Request::param('class');
+        $userList = Db::table('user')->where('class',$className)->paginate(20);
+        $this->view->assign('title', $className);
+        $this->view->assign('userList', $userList);
+        return $this->view->fetch('userList');
+    }
+
+//    删除班级
+    public function DeleteClass(){
+        $className = Request::param('class');
+        if (UserModel::where('class', $className)->delete()) {
+            return $this->success('删除成功', 'classList');
+        } else {
+            return $this->error('删除失败');
+        }
     }
 
     public function addStudent()
@@ -54,6 +94,44 @@ class User extends Base
     }
 
 //    编辑用户的方法
+//    导入用户方法
+    public function importUser(){
+        $rootPath=App::getRootPath();
+        $file = Request::file('title_class'); //获取file对象
+        $info = $file->validate(['ext'=>'xlsx,xls,csv'])-> move('uploads/');
+        if ($info) {
+            //获取文件名称
+            $exclePath = $info->getSaveName();  //获取文件名
+            $file_name =  $rootPath . 'public/uploads/'. $exclePath;   //上传文件的地址
+            //实例化PHPExcel类
+
+            $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
+//            halt($objReader);
+            $obj_PHPExcel = $objReader->load($file_name, $encode = 'utf-8');  //加载文件内容,编码utf-8
+            $excel_array = $obj_PHPExcel->getsheet(0)->toArray();
+            $arr  = reset($excel_array);
+            unset($excel_array[0]);
+//            halt($excel_array);
+            $data=[];
+            $i=0;
+//            halt($arr);
+            foreach($excel_array as $k=>$v) {
+                $data[$k][$arr[0]] = $v[0];
+                $data[$k][$arr[1]] = $v[1];
+                $data[$k][$arr[2]] = $v[2];
+                $data[$k][$arr[3]] = $v[3];
+                $i++;
+            }
+            $user=new UserModel();
+            $user->saveAll($data);
+            return $this->redirect('user/userlist');
+        }
+    }
+
+
+
+
+//    渲染编辑用户的界面
     public function userEdit()
     {
 //        获取要编辑的用户的ID
@@ -108,6 +186,34 @@ class User extends Base
         } else {
             return $this->error('删除失败');
         }
+    }
+
+    public function set(){
+        $id = Request::param('id');
+
+        if (Db::table('user')->where('id', $id)->update(['is_admin' => '1'])) {
+            return $this->success('设置成功', 'userList');
+        } else {
+            return $this->error('设置失败');
+        }
+    }
+    public function quitSet(){
+        $id = Request::param('id');
+        if (Db::table('user')->where('id', $id)->update(['is_admin' => '0'])) {
+            return $this->success('取消成功', 'userList');
+        } else {
+            return $this->error('取消失败');
+        }
+    }
+
+//    查看学生考试情况
+    public function getUserExamList(){
+        $id=Request::param('id');
+        $data=Db::table('user_exam')->where('user_id',$id)->paginate(20);
+        $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
+        $this->view->assign('title', '考试成绩');
+        $this->view->assign('examList', $data);
+        return $this->view->fetch('examlist');
     }
 
 }

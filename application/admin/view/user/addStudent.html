@@ -1,26 +1,39 @@
 {layout name="public:layout"/}
 <h4 class="text-center">添加学生</h4>
-        <form method="post" id="login">
-            <div class="form-group">
-                <label for="exampleInputEmail1">用户名</label>
-                <input name="name" class="form-control" id="exampleInputEmail1" placeholder="用户名" value="">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail2">邮箱</label>
-                <input name="email" class="form-control" id="exampleInputEmail2" placeholder="邮箱" value="">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail3">密码</label>
-                <input type="password" name="password" class="form-control" id="exampleInputEmail3" placeholder="密码">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword4">确认密码</label>
-                <input type="password" name="password_confirm" class="form-control" id="exampleInputPassword4" placeholder="确认密码">
-            </div>
-            <button type="button" class="btn btn-primary" id="register">提交</button><span id="message" style="margin-left:20px;color: red"></span>
-        </form>
+<form method="post" id="login">
+    <div class="form-group">
+        <label for="exampleInputEmail1">用户名</label>
+        <input name="name" class="form-control" id="exampleInputEmail1" placeholder="用户名" value="">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail2">邮箱</label>
+        <input name="email" class="form-control" id="exampleInputEmail2" placeholder="邮箱" value="">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail3">密码</label>
+        <input type="password" name="password" class="form-control" id="exampleInputEmail3" placeholder="密码">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword4">确认密码</label>
+        <input type="password" name="password_confirm" class="form-control" id="exampleInputPassword4"
+               placeholder="确认密码">
+    </div>
+    <button type="button" class="btn btn-primary" id="register">提交</button>
+    <span id="message" style="margin-left:20px;color: red"></span>
+</form>
 
+<form action="{:url('admin/user/importuser')}" enctype="multipart/form-data" method="post"
+      style="margin-top: 50px">
+    <h4 class="text-center text-danger">导入班级</h4>
+    <div class="form-group" style="display:flex;justify-content: space-between;margin-top: 50px">
+        <label for="title_class">选择要上传的班级文件:</label>
 
+        <input type="file" name="title_class" id="title_class">
+        <!-- 这里使用原生的post提交 -->
+        <button type="submit" class="btn btn-primary">保存</button>
+
+    </div>
+</form>
 <script>
     $(function () {
         $("#register").on('click', function () {
