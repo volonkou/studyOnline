@@ -17,17 +17,22 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <h4 class="navbar-text" style="margin-right: 30px">在线学习系统</h4>
-                    <ul class="nav navbar-nav">
-                        <!--volist是tp5的循环标签-->
-                        {volist name="cate" id="cate"}
-                        <li
-                                {eq name="$cate.id" value="$Request.param.cate_id" }
-                                class="active"
-                                {/eq}
-                        ><a href="{:url('index/index',['cate_id'=> $cate.id])}">{$cate.name}</a></li>
-                        {/volist}
-                    </ul>
+                    <h4 class="navbar-text" style="margin-right: 30px"><a style="text-decoration: none"
+                                                                          href="{:url('/')}">在线学习系统</a></h4>
+
+                    <div class="navbar-text" id="classShow" style="display: inline-flex">
+                        <h4  style="margin-right: 30px">学习</h4>
+                        <ul class="nav navbar-nav" id="SecondClass" style="display: none">
+                            <!--volist是tp5的循环标签-->
+                            {volist name="cate" id="cate"}
+                            <li
+                                    {eq name="$cate.id" value="$Request.param.cate_id" }
+                                    class="active"
+                                    {/eq}
+                            ><a href="{:url('index/index',['cate_id'=> $cate.id])}">{$cate.name}</a></li>
+                            {/volist}
+                        </ul>
+                    </div>
                     <ul class="nav navbar-nav navbar-right">
                         {if $Think.session.user_id}
                         <li><a>{$Think.session.user_name}</a></li>
@@ -35,6 +40,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a href="{:url('user/UserInfo')}">个人信息</a></li>
                                 {if $Think.session.is_admin==1||$Think.session.is_admin==2}
                                 <li><a href="/admin">管理后台</a></li>
                                 {/if}
@@ -51,3 +57,13 @@
                 </div>
             </div>
         </nav>
+        <script>
+            let classShow = document.getElementById('classShow');
+            let SecondClass = document.getElementById('SecondClass');
+            classShow.onmouseover = function () {
+                SecondClass.style.display = 'block';
+            }
+            classShow.onmouseout = function () {
+                SecondClass.style.display = 'none';
+            }
+        </script>

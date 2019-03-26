@@ -30,15 +30,16 @@ class User extends Base
     }
 
 
-    public function classList(){
-        $userList=UserModel::all();
-        foreach ($userList as $key=>$v){
-            if($userList[$key]['class']){
-                $class[]=$userList[$key]['class'];
+    public function classList()
+    {
+        $userList = UserModel::all();
+        foreach ($userList as $key => $v) {
+            if ($userList[$key]['class']) {
+                $class[] = $userList[$key]['class'];
             }
 
         }
-        $data=array_unique($class);
+        $data = array_unique($class);
 //        dump($data);
         $this->view->assign('classlist', $data);
         return $this->view->fetch('classlist');
@@ -46,16 +47,18 @@ class User extends Base
     }
 
 //班级用户列表
-    public function getClassUser(){
+    public function getClassUser()
+    {
         $className = Request::param('class');
-        $userList = Db::table('user')->where('class',$className)->paginate(20);
+        $userList = Db::table('user')->where('class', $className)->paginate(20);
         $this->view->assign('title', $className);
         $this->view->assign('userList', $userList);
         return $this->view->fetch('userList');
     }
 
 //    删除班级
-    public function DeleteClass(){
+    public function DeleteClass()
+    {
         $className = Request::param('class');
         if (UserModel::where('class', $className)->delete()) {
             return $this->success('删除成功', 'classList');
@@ -69,6 +72,7 @@ class User extends Base
         $this->assign('title', ' 添加学生');
         return $this->fetch('addStudent');
     }
+
 //新建用户的方法
     public function addSave()
     {
@@ -95,40 +99,39 @@ class User extends Base
 
 //    编辑用户的方法
 //    导入用户方法
-    public function importUser(){
-        $rootPath=App::getRootPath();
+    public function importUser()
+    {
+        $rootPath = App::getRootPath();
         $file = Request::file('title_class'); //获取file对象
-        $info = $file->validate(['ext'=>'xlsx,xls,csv'])-> move('uploads/');
+        $info = $file->validate(['ext' => 'xlsx,xls,csv'])->move('uploads/');
         if ($info) {
             //获取文件名称
             $exclePath = $info->getSaveName();  //获取文件名
-            $file_name =  $rootPath . 'public/uploads/'. $exclePath;   //上传文件的地址
+            $file_name = $rootPath . 'public/uploads/' . $exclePath;   //上传文件的地址
             //实例化PHPExcel类
 
             $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
 //            halt($objReader);
             $obj_PHPExcel = $objReader->load($file_name, $encode = 'utf-8');  //加载文件内容,编码utf-8
             $excel_array = $obj_PHPExcel->getsheet(0)->toArray();
-            $arr  = reset($excel_array);
+            $arr = reset($excel_array);
             unset($excel_array[0]);
 //            halt($excel_array);
-            $data=[];
-            $i=0;
+            $data = [];
+            $i = 0;
 //            halt($arr);
-            foreach($excel_array as $k=>$v) {
+            foreach ($excel_array as $k => $v) {
                 $data[$k][$arr[0]] = $v[0];
                 $data[$k][$arr[1]] = $v[1];
                 $data[$k][$arr[2]] = $v[2];
                 $data[$k][$arr[3]] = $v[3];
                 $i++;
             }
-            $user=new UserModel();
+            $user = new UserModel();
             $user->saveAll($data);
             return $this->redirect('user/userlist');
         }
     }
-
-
 
 
 //    渲染编辑用户的界面
@@ -188,7 +191,8 @@ class User extends Base
         }
     }
 
-    public function set(){
+    public function set()
+    {
         $id = Request::param('id');
 
         if (Db::table('user')->where('id', $id)->update(['is_admin' => '1'])) {
@@ -197,7 +201,9 @@ class User extends Base
             return $this->error('设置失败');
         }
     }
-    public function quitSet(){
+
+    public function quitSet()
+    {
         $id = Request::param('id');
         if (Db::table('user')->where('id', $id)->update(['is_admin' => '0'])) {
             return $this->success('取消成功', 'userList');
@@ -207,13 +213,27 @@ class User extends Base
     }
 
 //    查看学生考试情况
-    public function getUserExamList(){
-        $id=Request::param('id');
-        $data=Db::table('user_exam')->where('user_id',$id)->paginate(20);
+    public function getUserExamList()
+    {
+        $id = Request::param('id');
+        $data = Db::table('user_exam')->where('user_id', $id)->paginate(20);
         $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
         $this->view->assign('title', '考试成绩');
         $this->view->assign('examList', $data);
         return $this->view->fetch('examlist');
     }
 
+
+//    修改学生成绩
+    public function EditScore()
+    {
+        $data = Request::post();
+        $id = $data['id'];
+        unset($data['id']);
+        if (UserExam::where('id', $id)->data($data)->update()) {
+            return $this->success('修改成功', 'examlist');
+        } else {
+            return $this->error('修改失败');
+        }
+    }
 }

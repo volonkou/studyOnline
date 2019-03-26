@@ -77,21 +77,25 @@ class Index extends Base
 
 
         } else {
-//            打开页面默认展示判断题
-            $data = Db::table('question')
-                ->where('type', '1')
-                ->order('create_time', 'desc')
-                ->paginate(5);
+//            打开页面默认展示视频
+            $data = Db::table('video')
+                ->paginate(9);
             $page = $data->render();
             $testData = $data->all();
+<<<<<<< HEAD
             if (!is_null($testData)) {
                 foreach ($testData as $key => $row) {
                     $testData[$key]['options'] = explode("||", $row['options']);
                 }
             }
+=======
+
+
+            $this->view->assign('empty', '<span style="red">没有任何数据</span>');
+>>>>>>> f105e8375eb8a4ffc4fb0141a65e9b017756d850
             $this->view->assign('testData', $testData);
             $this->view->assign('page', $page);
-            return $this->view->fetch('judge');
+            return $this->view->fetch('videolist');
         }
 
 

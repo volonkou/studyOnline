@@ -1,0 +1,35 @@
+{include file="public:header"/}
+<h4 class="text-center text-danger">编辑用户信息</h4>
+<form method="post" action="{:url('user/doEdit')}">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用户名</label>
+        <input name="name" class="form-control" value="{$userInfo.name}">
+    </div>
+    <div class="form-group">
+        <label>邮箱</label>
+        <input name="email" class="form-control" value="{$userInfo.email}">
+    </div>
+    <div class="form-group">
+        <label>密码</label>
+        <input type="password" name="password" class="form-control" value="{$userInfo.password}">
+    </div>
+    <input type="hidden" name="id" value="{$userInfo.id}">
+    <button type="submit" class="btn btn-primary" id="register">提交</button><span id="message" style="margin-left:20px;color: red"></span>
+</form>
+
+<h4 class="text-center">考试列表</h4>
+<table class="table table-hover text-center">
+    <tr>
+
+        <td>开始名称</td>
+        <td>考试得分</td>
+    </tr>
+    {volist name="examList" id="exam" empty="$empty"}
+    <tr>
+        <td>{$exam.name}</td>
+        <td id="score">{$exam.score}</td>
+    </tr>
+    {/volist}
+</table>
+
+{include file="public:footer"/}
