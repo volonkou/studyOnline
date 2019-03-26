@@ -82,17 +82,8 @@ class Index extends Base
                 ->paginate(9);
             $page = $data->render();
             $testData = $data->all();
-<<<<<<< HEAD
-            if (!is_null($testData)) {
-                foreach ($testData as $key => $row) {
-                    $testData[$key]['options'] = explode("||", $row['options']);
-                }
-            }
-=======
-
 
             $this->view->assign('empty', '<span style="red">没有任何数据</span>');
->>>>>>> f105e8375eb8a4ffc4fb0141a65e9b017756d850
             $this->view->assign('testData', $testData);
             $this->view->assign('page', $page);
             return $this->view->fetch('videolist');
