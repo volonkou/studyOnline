@@ -25,7 +25,6 @@ class User extends Base
         $this->view->assign('title', '用户管理');
 //        将拿到的用户列表命名并保存
         $this->view->assign('userList', $userList);
-        $this->view->assign('userList', $userList);
         return $this->view->fetch('userList');
     }
 
@@ -33,14 +32,19 @@ class User extends Base
     public function classList()
     {
         $userList = UserModel::all();
+        $class=[];
         foreach ($userList as $key => $v) {
             if ($userList[$key]['class']) {
                 $class[] = $userList[$key]['class'];
             }
 
         }
-        $data = array_unique($class);
+        if(!is_null($class)){
+            $data = array_unique($class);
+        }
+
 //        dump($data);
+        $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
         $this->view->assign('classlist', $data);
         return $this->view->fetch('classlist');
 
