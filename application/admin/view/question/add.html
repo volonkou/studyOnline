@@ -66,6 +66,70 @@
         margin-right: 11px;
     }
 </style>
+<style>
+
+
+    /*点击添加图片按钮div包裹*/
+    .addbtn_wrap {
+        position: relative;
+    }
+
+    /*添加图片按钮*/
+    .addbtn {
+        position: absolute;
+    }
+
+    input[type=file] {
+        width: 100px;
+        position: absolute;
+        top: 5px;
+        opacity: 0;
+    }
+
+    /*提交按钮*/
+    input[type=submit] {
+        margin: 0 auto;
+        display: none;
+    }
+
+    /*所有图片div包裹*/
+    .img_wrap {
+        width: 750px;
+        margin-top: 40px;
+        float: left;
+        margin-bottom: 40px;
+    }
+
+
+    .pic_wrap {
+        width: 120px;
+        height: 160px;
+        float: left;
+        position: relative;
+        margin: 5px;
+    }
+
+
+    .img {
+        width: 120px;
+        height: 160px;
+        float: left;
+    }
+
+    .delete {
+        width: 120px;
+        height: 160px;
+        position: absolute;
+        display: none;
+        border-radius: 6px;
+    }
+
+    .delete img {
+        float: right;
+    }
+
+</style>
+
 <h4 class="text-center text-danger">新建题目</h4>
 <div id="addQuestionWrapper" style="width: 750px; padding-top: 15px;">
     <form class="form-horizontal" id="addQuestionForm" data-id="{$question.id|default=''}">
@@ -151,20 +215,34 @@
                 </div>
             </div>
         </div>
+        <div style="height: 250px;border: #5e5e5e solid 1px">
+            <!--file包裹-->
+            <div class="addbtn_wrap" style="margin: 20px">
+                <input type="button" class="btn btn-primary addbtn" value="点击添加图片">
+                <input type="file" name="image[]" id="file1" style="z-index: 1" onchange="getPhoto(this)">
+            </div>
 
+
+            <!--图片包裹-->
+            <div class="img_wrap">
+
+            </div>
+
+        </div>
         <div class="" style="text-align: right;width: 750px">
             <a id="saveQuestion" class="btn btn-primary">保存</a>
         </div>
     </form>
 
-    <form action="{:url('admin/question/importQuestion')}" enctype="multipart/form-data" method="post" style="margin-top: 50px">
+    <form action="{:url('admin/question/importQuestion')}" enctype="multipart/form-data" method="post"
+          style="margin-top: 50px">
         <h4 class="text-center text-danger">导入题目</h4>
         <div class="form-group" style="display:flex;justify-content: space-between;margin-top: 50px">
             <label for="title_question">选择要上传的题目文件:</label>
 
-                <input type="file" name="title_question" id="title_question">
-                <!-- 这里使用原生的post提交 -->
-                <button type="submit" class="btn btn-primary">保存</button>
+            <input type="file" name="title_question" id="title_question">
+            <!-- 这里使用原生的post提交 -->
+            <button type="submit" class="btn btn-primary">保存</button>
 
         </div>
     </form>
@@ -173,8 +251,41 @@
 
 <script>
     (function () {
+
+        $('#saveQuestion').on('click', function Img(){
+            console.log($("input[name='image[]']"))
+            let ImgData=new FormData();
+            let img=$("input[name='image[]']").get(0).files[0];
+            if(img){
+                ImgData.append("imglist",img);
+                $.ajax({
+                    url: "{:url('ImageUpload')}",
+                    type: 'post',
+                    data: ImgData,
+                    dataType:"json",
+                    processData : false,
+                    contentType : false,
+                    success: function (data) {
+                        // alert(data.message)
+                        PostData(data)
+                    },
+                    error:function (data) {
+                        console.log(data,"11111")
+                    }
+                })
+            }else {
+                PostData("");
+            }
+
+
+        })
+
+
+
+
         // 保存
-        $('#saveQuestion').on('click', function () {
+         function PostData(imgName) {
+
             let form = $('#addQuestionForm')
             let formData = {}
             let type = $('.question-type-pane.active').data('type');
@@ -202,9 +313,10 @@
             formData["answer"] = questionData.answer || "";
             formData["type"] = questionType;
             formData["name"] = typeName;
-            // formData["analysis"] = form.find('[name="analysis"]').val();
+            formData['image']=imgName;
 
-            console.log(formData)
+console.log(formData)
+
             // 用ajax提交所输入的数据
             $.ajax({
                 url: "{:url('saveQuestion')}",
@@ -212,13 +324,14 @@
                 data: formData,
                 success: function (data) {
                     alert(data.message)
+                    console.log(data)
                 },
                 error: function (data) {
                     console.log(data)
                 }
             })
 
-        });
+        };
 
         function getQuestionData(type) {
             var data = {}, options = [];
@@ -262,4 +375,150 @@
             }
         }).trigger('change');
     })();
+</script>
+<script type="text/javascript">
+
+
+    /*预览*/
+    var count = 1;
+
+    function getPhoto(node) {
+
+        var imgURL = "";
+        try {
+            var file = null;
+            if (node.files && node.files[0]) {
+                file = node.files[0];
+            } else if (node.files && node.files.item(0)) {
+                file = node.files.item(0);
+            }
+
+            try {
+                imgURL = file.getAsDataURL();
+
+            } catch (e) {
+                imgRUL = window.URL.createObjectURL(file);
+            }
+        } catch (e) {
+            if (node.files && node.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgURL = e.target.result;
+                };
+                reader.readAsDataURL(node.files[0]);
+            }
+        }
+
+        /*动态添加file和对应的图片预览*/
+        createPic();
+        createFile();
+
+        count++;
+        return imgURL;
+    }
+
+    /*创建图片预览元素*/
+    function createPic() {
+        var picText = '<div class="pic_wrap" id=" showPic' + count + '" onmouseover="overDelete(this)" onmouseleave="leaveDelete(this)">' +
+            '<img  src="' + imgRUL + '"" class="img img-rounded">' +
+            '<div class="delete"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553688531916&di=d753561e22dfbc3b1868eace0e997f3c&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F87%2F20%2F58dafaf531804_610.jpg" style="width: 20px;height: 20px;" onclick="deletePic(this)"></div>' +
+            '</div>';
+
+        /*遍历除去最新一个file的所有file，如果有file的值与最后一个file的值相等，不插入预览图*/
+
+        for (var i = 0; i < $('input[type=file]').length - 1; i++) {
+            var val = $('input[type=file]').eq(i).val();
+
+
+            if ($('input[type=file]').last().val() == val) {
+
+                /*此处不插入图片，就让count回到之前那一步，否则id=file和id=showPic的数据后缀对不上，导致file和图片对应错乱*/
+                count = count - 1;
+                return;
+            }
+        }
+
+        $('.img_wrap').append(picText);
+
+    }
+
+
+    /*创建新的file元素*/
+    function createFile() {
+
+        var flieText = '<input type="file" name="image[]" id="file' + (count + 1) + '" style="z-index: ' + (count + 1) + '" onchange="getPhoto(this)">';
+
+        /*遍历除去最新一个file的所有file，如果有file的值与最后一个file的值相等，提示图片已存在，清空最后一个file*/
+
+        for (var i = 0; i < $('input[type=file]').length - 1; i++) {
+            var val = $('input[type=file]').eq(i).val();
+
+            if ($('input[type=file]').last().val() == val) {
+                var file = $('input[type=file]').last();
+                file.after(file.clone().val(""));
+                file.remove();
+                alert("图片已存在！");
+                return;
+            }
+        }
+
+
+        $('.addbtn_wrap').append(flieText);
+
+
+        /*图片数量大于1，显示提交按钮，添加一次判断一次*/
+        if ($('.pic_wrap').length <= 0) {
+
+            $('input[type=submit]').css('display', 'none');
+        } else {
+            $('input[type=submit]').css('display', 'block');
+        }
+    }
+
+
+    /*移入移出，删除遮罩层显示隐藏*/
+    function overDelete(obj) {
+        $(obj).children('div').show();
+    }
+
+    function leaveDelete(obj) {
+        $(obj).children('div').hide();
+    }
+
+
+    /*删除图片和对应的file*/
+    function deletePic(obj) {
+
+        /*提取图片的id的数字部分*/
+        var picId = $(obj).parent().parent().attr('id');
+
+        var picVal = picId.replace(/[^0-9]/ig, "");
+
+        var fileArr = $('input[type=file]');
+
+        /*遍历file，如果图片id的数字部分和file的id的数字部分相同，那么文件与图片是对应的，删除图片的同时删除对应的file*/
+
+        fileArr.each(function () {
+
+            /*提取file的id的数字部分*/
+            var fileId = $(this).attr('id');
+            var fileVal = fileId.replace(/[^0-9]/ig, "");
+            if (fileVal == picVal) {
+                $(this).remove();
+                $(obj).parent().parent().remove();
+            }
+        });
+
+        /*图片数量大于1，显示提交按钮,删除一次判断一次*/
+
+        if ($('.pic_wrap').length <= 0) {
+
+            $('input[type=submit]').css('display', 'none');
+
+        } else {
+            $('input[type=submit]').css('display', 'block');
+        }
+    }
+
+
 </script>

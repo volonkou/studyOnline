@@ -1,0 +1,92 @@
+{include file="public:header"/}
+<div id="videoId" data-user="{$Think.session.user_id}" data-time="{$video.currentTime}">
+
+    <video controls="controls" style="width: 1000px" id="{$video.id}" class="Video">
+        <source src="/uploads/{$video.video_url}" type="video/mp4"/>
+    </video>
+
+</div>
+<script>
+
+
+    let player = document.getElementsByClassName('Video')[0];
+    player.currentTime = $('#videoId').data('time');
+    let timer
+    player.addEventListener('play', function () {
+        Ajax()
+        timer = window.setInterval(function () {
+            var currentTime = player.currentTime.toFixed(1);
+            Ajax(currentTime)
+        }, 5000);
+    })
+
+    player.addEventListener('pause', function () {
+        var currentTime = player.currentTime.toFixed(1);
+        Ajax(currentTime)
+        window.clearInterval(timer)
+
+    })
+
+
+    function Ajax(currentTime) {
+        let videoID = $('#videoId').data('user')
+        if (videoID) {
+            let data = {}
+            data["user_id"] = videoID;
+            data["video_id"] = player.id
+            data["currentTime"] = currentTime
+            $.ajax({
+                type: 'post',
+                url: "{:url('index/SaveVideo')}",
+                data: data,
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        } else {
+            alert("请先登录")
+            window.location.href = "/index/user/login"
+        }
+    }
+
+    function getVideoprogress() {
+
+    }
+
+    getVideoprogress()
+
+    // player.currentTime = 19;
+    // player.play();
+
+
+    // getVideoprogress()
+
+    // $('.Video').on('click', function () {
+    //     alert("1111")
+    //     let videoID = $('#videoId').data('user')
+    //     if(videoID){
+    //         let data={}
+    //         data["user_id"]=videoID;
+    //         data["video_id"]=this.id
+    //         $.ajax({
+    //             type: 'post',
+    //             url: "{:url('index/VideoDetail')}",
+    //             data: data,
+    //             success: function (data) {
+    //                 console.log(data)
+    //             }
+    //         })
+    //
+    //
+    //     }else {
+    //         alert("请先登录")
+    //         window.location.href="/index/user/login"
+    //     }
+    //
+    //
+    // })
+
+
+</script>
+
+{include file="public:footer"/}

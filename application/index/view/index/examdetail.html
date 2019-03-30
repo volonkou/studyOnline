@@ -7,6 +7,9 @@
         <li style="margin-bottom: 50px;" class="question-item" data-type="{$data.type}" data-index="{$k}"
             data-score="{$data.score}" data-answer="{$data.answer}">
             <h5>{$k}. {$data.title}({$data.score})分</h5>
+            <!--{neq name="$data.image" value=""}-->
+            <img src="/uploads/{$data.image}" style="width: 200px;height:auto;"/>
+            <!--{/neq}-->
             <div>
                 {volist name="data.options" id="option" empty="$empty" key="k1"}
                 <div style="display:flex;justify-items: center;">

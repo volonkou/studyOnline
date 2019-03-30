@@ -13,6 +13,8 @@ use app\common\model\User as UserModel;
 use think\facade\Request;
 use think\facade\Session;
 use think\Db;
+use app\common\model\UserVideo;
+use app\common\model\Video;
 
 class User extends Base
 {
@@ -102,15 +104,23 @@ class User extends Base
 
     public function UserInfo()
     {
-        $id=Session::get('user_id');
-        $data=Db::table('user')->find($id);
+        $ids = [];
+        $id = Session::get('user_id');
+        $data = Db::table('user')->find($id);
         $examdata = Db::table('user_exam')->where('user_id', $id)->paginate(20);
+        $videoS = UserVideo::where('user_id', $id)->select();
+        foreach ($videoS as $id) {
+            $ids[] = $id['video_id'];
+        }
+        $videoData=Video::all($ids);
+
         $cate = Db::table('cate')->select();
         $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
         $this->view->assign('cate', $cate);
         $this->assign('title', '个人信息');
         $this->assign('userInfo', $data);
         $this->assign('examList', $examdata);
+        $this->assign('videoData', $videoData);
         return $this->fetch('userinfo');
     }
 
@@ -143,5 +153,21 @@ class User extends Base
         }
 
     }
+
+
+//    播放视频页面
+    public function VideoDetail()
+    {
+        $cate = Db::table('cate')->select();
+        $this->view->assign('cate', $cate);
+        $id = Request::param('id');
+        $video = Db::table('video')->where('id', $id)->find();
+        $time=Db::table('user_video')->where('video_id',$id)->find();
+        $video['currentTime']=$time['currentTime'];
+        $this->view->assign('video', $video);
+        return $this->view->fetch('videodetail');
+
+    }
+
 
 }

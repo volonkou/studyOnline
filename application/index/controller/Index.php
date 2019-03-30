@@ -131,7 +131,7 @@ class Index extends Base
 
         $json = Request::post();
 
-        $exam = Db::table('exam')->where('id',$json['examID'])->find();
+        $exam = Db::table('exam')->where('id', $json['examID'])->find();
 
 
         unset($json['id']);
@@ -144,8 +144,27 @@ class Index extends Base
             return 0;
         }
 
+    }
+
+//    播放视频页面
+    public function VideoDetail()
+    {
+        $cate = Db::table('cate')->select();
+        $this->view->assign('cate', $cate);
+        $id = Request::param('id');
+        $video = Db::table('video')->where('id', $id)->find();
+
+        $this->view->assign('video', $video);
+        return $this->view->fetch('videodetail');
 
     }
 
+//    保存视频信息
+    public function SaveVideo()
+    {
+        $data = Request::post();
+        Db::table('user_video')->insert($data,true);
+
+    }
 
 }
