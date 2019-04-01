@@ -1,7 +1,7 @@
 {include file="public:header"/}
 <div id="videoId" data-user="{$Think.session.user_id}">
 
-    <video controls="controls" style="width: 1000px" id="{$video.id}" class="Video">
+    <video controls="controls" style="width: 1000px;height:500px;" id="{$video.id}" class="Video">
         <source src="/uploads/{$video.video_url}" type="video/mp4"/>
     </video>
 

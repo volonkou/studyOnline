@@ -48,6 +48,7 @@ class Index extends Base
                 $page = $data->render();
                 $testData = $data->all();
             }
+            $this->view->assign('empty', '<span style="red">没有任何数据</span>');
             //        将数据存储起来给模板调用
             $this->view->assign('testData', $testData);
 //            将处理过的分页信息保存起来
@@ -118,6 +119,7 @@ class Index extends Base
                 $data[$key]['options'] = explode("||", $row['options']);
             }
         }
+        $this->view->assign('empty', '<span style="red">没有任何数据</span>');
         $this->view->assign('testData', $data);
         $this->view->assign('examID', $id);
 

@@ -27,8 +27,7 @@ class Video extends Base
             $data = Request::post();
 
                 //获取上传的视频信息
-                $file = Request::file('title_video'); //获取file对象
-halt($file);
+                $file = Request::file('title_video');
                 //文件信息验证与上传到服务器指定目录
                 $info = $file -> validate([
                     'ext'=>'avi,mp4,mov,mkv,flv,3gp'  //文件扩展名
