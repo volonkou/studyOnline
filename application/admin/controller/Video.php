@@ -76,4 +76,18 @@ class Video extends Base
         }
     }
 
+
+    //    播放视频页面
+    public function VideoDetail()
+    {
+        $id = Request::param('id');
+        $video = Db::table('video')->where('id', $id)->find();
+        $time=Db::table('user_video')->where('video_id',$id)->find();
+        $video['currentTime']=$time['currentTime'];
+        $this->view->assign('video', $video);
+        return $this->view->fetch('videodetail');
+
+    }
+
+
 }

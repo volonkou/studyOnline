@@ -35,7 +35,9 @@ class User extends Base
 //    验证数据
             $data = Request::post();//要验证的数据
             $rule = 'app\common\validate\User';
+
             $res = $this->validate($data, $rule);
+
             if (true !== $res) {
                 return ['status' => -1, 'message' => $res];
             } else {

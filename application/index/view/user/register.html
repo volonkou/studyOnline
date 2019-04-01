@@ -32,11 +32,12 @@
 <script>
     $(function () {
         $("#register").on('click', function () {
-            console.log($('#login').serialize())
+            let data=$('#login').serialize()
+            console.log(data)
             $.ajax({
                 type: 'post',
-                url: "{:url('index/user/insert')}",
-                data: $('#login').serialize(),
+                url: "{:url('insert')}",
+                data: data,
                 dataType: 'json',
                 success: function (data) {
                     console.log(data)

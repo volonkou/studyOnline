@@ -15,12 +15,6 @@ class User extends Model
     protected $createTime = 'create_time'; //创建时间字段
     protected $updateTime = 'update_time'; //更新时间字段
 
-    public function getStatusAttr($value)
-    {
-        $status = ['1' => '启用', '0' => '禁用'];
-        return $status[$value];
-    }
-
 
     //用户密码修改器
     public function setPasswordAttr($value)
