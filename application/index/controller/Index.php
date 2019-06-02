@@ -18,6 +18,8 @@ class Index extends Base
 {
     public function index()
     {
+//      halt(memory_get_usage());
+//       halt(phpinfo());
         $cate = Db::table('cate')->select();
         $this->view->assign('cate', $cate);
 //获取题目类型的ID
@@ -40,7 +42,7 @@ class Index extends Base
                 }
             } else {
                 if ($type == 5) {
-                    $data = Db::table('video')->order('id', 'desc')->paginate(9);
+                    $data = Db::table('video')->paginate(9);
                 } else if ($type == 6) {
                     $data = Db::table('exam')->paginate(9);
 

@@ -225,10 +225,15 @@ class User extends Base
         $id = Request::param('id');
         $data = Db::table('user_exam')->where('user_id', $id)->paginate(20);
         $videoS = UserVideo::where('user_id', $id)->select();
-        foreach ($videoS as $id) {
-            $ids[] = $id['video_id'];
+        if(!$videoS->isEmpty()){
+            foreach ($videoS as $id) {
+                $ids[] = $id['video_id'];
+            }
+            $videoData=Video::all($ids);
+        }else{
+            $videoData=[];
         }
-        $videoData=Video::all($ids);
+
         $this->view->assign('empty', '<span style="color:red">没有任何数据</span>');
         $this->view->assign('title', '考试成绩');
         $this->view->assign('examList', $data);

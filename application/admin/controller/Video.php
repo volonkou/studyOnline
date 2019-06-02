@@ -12,6 +12,7 @@ use app\admin\common\controller\Base;
 use app\admin\common\model\Video as VideoModel;
 use think\facade\Request;
 use think\Db;
+
 class Video extends Base
 {
     public function addVideo()
@@ -19,33 +20,34 @@ class Video extends Base
         $this->view->assign('title', '新建视频');
         return $this->view->fetch('addvideo');
     }
+
     //保存视频
     public function save()
     {
-        if (Request::isPost()){
+        if (Request::isPost()) {
             //1.获取表单提交的数据
             $data = Request::post();
 
-                //获取上传的视频信息
-                $file = Request::file('title_video');
-                //文件信息验证与上传到服务器指定目录
-                $info = $file -> validate([
-                    'ext'=>'avi,mp4,mov,mkv,flv,3gp'  //文件扩展名
-                ]) -> move('uploads/');  //移动到public/uploads目录下面
-                if ($info) {
+            //获取上传的视频信息
+            $file = Request::file('title_video');
+            //文件信息验证与上传到服务器指定目录
+            $info = $file->validate([
+                'ext' => 'avi,mp4,mov,mkv,flv,3gp'  //文件扩展名
+            ])->move('uploads/');  //移动到public/uploads目录下面
+            if ($info) {
 //                    获取视频的名称信息
-                    $data['video_url'] = $info->getSaveName();
+                $data['video_url'] = $info->getSaveName();
 
-                } else {
-                    $this->error($file->getError(),'addvideo');
-                }
-
-                //将数据写到文档表中
-                if(VideoModel::create($data)){
-                    $this->success('视频发布成功','index/index');
-                } else {
-                    $this->error('视频保存失败');
-                }
+            } else {
+                $this->error($file->getError(), 'addvideo');
+            }
+            unset($data["id"]);
+            //将数据写到文档表中
+            if (VideoModel::create($data)) {
+                $this->success('视频发布成功', 'index/index');
+            } else {
+                $this->error('视频保存失败');
+            }
 
 
         } else {
@@ -82,8 +84,8 @@ class Video extends Base
     {
         $id = Request::param('id');
         $video = Db::table('video')->where('id', $id)->find();
-        $time=Db::table('user_video')->where('video_id',$id)->find();
-        $video['currentTime']=$time['currentTime'];
+        $time = Db::table('user_video')->where('video_id', $id)->find();
+        $video['currentTime'] = $time['currentTime'];
         $this->view->assign('video', $video);
         return $this->view->fetch('videodetail');
 

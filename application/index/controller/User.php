@@ -70,7 +70,8 @@ class User extends Base
     {
         if (Request::isAjax()) {
 //    验证数据
-            $data = Request::post();//要验证的数据
+            $data = Request::post();
+            //要验证的数据
             $rule = [
                 'email|邮箱' => 'require|email',
                 'password|密码' => 'require|alphaNum'
